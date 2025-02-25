@@ -1,0 +1,2 @@
+# llvm-tblgen ../llvm/lib/Target/RISCV/RISCV.td -I../llvm/include -I../llvm/lib/Target/RISCV --gen-asm-matcher -o RISCVGenAsmMatcher.inc
+llvm-tblgen ../llvm/lib/Target/RISCV/RISCV.td -I../llvm/include -I../llvm/lib/Target/RISCV --gen-register-info -o RISCVGenRegisterInfo.inc

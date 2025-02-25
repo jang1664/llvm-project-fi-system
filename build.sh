@@ -1,0 +1,17 @@
+rm -rf CMakeCache.txt CMakeFiles
+
+cmake ../llvm \
+-DCMAKE_CXX_STANDARD=17 \
+-DCMAKE_C_COMPILER=gcc \
+-DCMAKE_CXX_COMPILER=g++ \
+-DCMAKE_BUILD_TYPE=Debug \
+-DCMAKE_INSTALL_PREFIX="~/tools/llvm" \
+-DLLVM_ENABLE_RTTI=ON \
+-DLLVM_ENABLE_ASSERTIONS=ON \
+-DLLVM_ENABLE_PROJECTS="clang;lld" \
+-DLLVM_TARGETS_TO_BUILD="X86;RISCV"
+
+cmake --build . --parallel 64
+
+mkdir -p /root/tools/llvm
+cmake --install . --prefix /root/tools/llvm

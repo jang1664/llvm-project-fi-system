@@ -503,6 +503,12 @@ enum NodeType : unsigned {
   TH_SWD,
   TH_SDD,
   LAST_MEMORY_OPCODE = TH_SDD,
+
+  FIRST_FI_OPCODE,
+  SET_DL_VVV_S = FIRST_FI_OPCODE,
+  SET_DL_VVV_V,
+  DL_VVV_F32_MULT,
+  LAST_FI_OPCODE = DL_VVV_F32_MULT,
 };
 // clang-format on
 } // namespace RISCVISD

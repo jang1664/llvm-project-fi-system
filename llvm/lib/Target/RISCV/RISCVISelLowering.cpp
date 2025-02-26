@@ -9961,6 +9961,12 @@ SDValue RISCVTargetLowering::LowerINTRINSIC_WO_CHAIN(SDValue Op,
 
     return NewNode;
   }
+  // case Intrinsic::riscv_set_dl_vvv_s:
+  // case Intrinsic::riscv_set_dl_vvv_v:
+  // case Intrinsic::riscv_dl_vvv_f32_mult:{
+  //   LLVM_DEBUG(dbgs() << "hello" << '\n');
+  //   return SDValue();
+  // }
   }
 
   return lowerVectorIntrinsicScalars(Op, DAG, Subtarget);

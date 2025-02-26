@@ -1333,6 +1333,14 @@ def HasVendorXqcilo
       AssemblerPredicate<(all_of FeatureVendorXqcilo),
                          "'Xqcilo' (Qualcomm uC Large Offset Load Store Extension)">;
 
+// def FeatureVendorXfpint : RISCVExperimentalExtension<0, 2, "FP-INT GEMM extention", []>;
+def FeatureVendorXfpint : RISCVExtension<0, 2, "FP-INT GEMM extention">;
+
+def HasVendorXfpint
+    : Predicate<"Subtarget->hasVendorXfpint()">,
+      AssemblerPredicate<(all_of FeatureVendorXfpint),
+                         "'Xfpint' (FP-INT GEMM extention)">;
+
 //===----------------------------------------------------------------------===//
 // LLVM specific features and extensions
 //===----------------------------------------------------------------------===//

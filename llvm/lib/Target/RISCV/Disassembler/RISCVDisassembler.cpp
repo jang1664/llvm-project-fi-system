@@ -721,6 +721,8 @@ DecodeStatus RISCVDisassembler::getInstruction32(MCInst &MI, uint64_t &Size,
                         "Qualcomm uC Conditional Move custom opcode table");
   TRY_TO_DECODE_FEATURE(RISCV::FeatureVendorXqciint, DecoderTableXqciint32,
                         "Qualcomm uC Interrupts custom opcode table");
+  TRY_TO_DECODE_FEATURE(RISCV::FeatureVendorXfpint, DecoderTableXfpint32,
+                        "FPINT extension opcode table");
   TRY_TO_DECODE(true, DecoderTable32, "RISCV32 table");
 
   return MCDisassembler::Fail;
@@ -790,12 +792,12 @@ DecodeStatus RISCVDisassembler::getInstruction(MCInst &MI, uint64_t &Size,
                                                uint64_t Address,
                                                raw_ostream &CS) const {
   // It's a 16 bit instruction if bit 0 and 1 are not 0b11.
-  if ((Bytes[0] & 0b11) != 0b11)
+  if ((Bytes[0] & 0b11) != 0b11 && STI.hasFeature(RISCV::FeatureStdExtC))
     return getInstruction16(MI, Size, Bytes, Address, CS);
 
   // It's a 32 bit instruction if bit 1:0 are 0b11(checked above) and bits 4:2
   // are not 0b111.
-  if ((Bytes[0] & 0b1'1100) != 0b1'1100)
+  if ((Bytes[0] & 0b1'1100) != 0b1'1100 || STI.hasFeature(RISCV::FeatureVendorXfpint))
     return getInstruction32(MI, Size, Bytes, Address, CS);
 
   // 48-bit instructions are encoded as 0bxx011111.

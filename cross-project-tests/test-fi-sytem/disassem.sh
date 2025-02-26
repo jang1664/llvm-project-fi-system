@@ -1,0 +1,1 @@
+llvm-objdump -D -M no-aliases --arch-name=riscv32 --mattr=xfpint test.o > test.dump

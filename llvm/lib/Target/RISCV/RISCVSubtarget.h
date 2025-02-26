@@ -288,6 +288,8 @@ public:
     return 1;
   }
 
+  bool useFpInt() const { return HasVendorXfpint;}
+
 protected:
   // SelectionDAGISel related APIs.
   std::unique_ptr<const SelectionDAGTargetInfo> TSInfo;

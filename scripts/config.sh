@@ -10,8 +10,3 @@ cmake ../llvm \
 -DLLVM_ENABLE_ASSERTIONS=ON \
 -DLLVM_ENABLE_PROJECTS="clang;lld" \
 -DLLVM_TARGETS_TO_BUILD="X86;RISCV"
-
-cmake --build . --parallel 64
-
-mkdir -p /root/tools/llvm
-cmake --install . --prefix /root/tools/llvm

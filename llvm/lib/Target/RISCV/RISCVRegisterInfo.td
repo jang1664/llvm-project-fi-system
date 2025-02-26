@@ -792,6 +792,74 @@ foreach m = LMULList in {
   }
 }
 
+// ===----------------------------------------------------------------------===//
+// fi feature registers
+// ===----------------------------------------------------------------------===//
+defvar NumFp16VectorRegisters = 8;
+defvar NumFp32VectorRegisters = 4;
+
+// fp16 vector registers
+foreach Index = !range(0, NumFp16VectorRegisters, 1) in {
+  def F16V#Index : RISCVReg<Index, "f16v"#Index>;
+}
+
+// fp32 vector registers
+def sub_2048_lo : SubRegIndex<2048>;
+def sub_2048_hi : SubRegIndex<2048, 2048>;
+let SubRegIndices = [sub_2048_lo, sub_2048_hi] in {
+  foreach Index = !range(0, NumFp16VectorRegisters, 2) in {
+    def F32V#Index : RISCVRegWithSubRegs<Index, "f32v"#Index, [!cast<Register>("F16V"#Index), !cast<Register>("F16V"#!add(Index, 1))]>;
+  }
+}
+
+def F16VR : RegisterClass<"RISCV", [v128f16], 2048, (sequence "F16V%u", 0, !sub(NumFp16VectorRegisters,1))>;
+def F32VR : RegisterClass<"RISCV", [v128f32], 4096, (sequence "F32V%u", 0, !sub(NumFp16VectorRegisters,1), 2)>;
+
+def MXUReg0 : RISCVReg<0, "mxu_reg0">;
+def MXUReg1 : RISCVReg<0, "mxu_reg1">;
+def MXUReg : RegisterClass<"RISCV", [i32], 32, (add MXUReg0, MXUReg1)>;
+
+def ZeroPointReg0 : RISCVReg<0, "zero_point_reg0">;
+def ZeroPointReg : RegisterClass<"RISCV", [v128i32], 4096, (add ZeroPointReg0)>;
+
+foreach AddrModuleIdx = !range(0, 3, 1) in {
+  foreach DimIdx = !range(0, 3, 1) in {
+    def AddrGen#AddrModuleIdx#Dim#DimIdx#Strd : RISCVReg<0, "addr_gen"#AddrModuleIdx#"_dim"#DimIdx#"_strd">;
+    def AddrGen#AddrModuleIdx#Dim#DimIdx#Bound : RISCVReg<0, "addr_gen"#AddrModuleIdx#"_dim"#DimIdx#"_bound">;
+  }
+}
+
+def AddrGenReg : RegisterClass<"RISCV", [i32], 32, (add AddrGen0Dim0Strd, AddrGen0Dim1Strd, AddrGen0Dim2Strd, AddrGen1Dim0Strd, AddrGen1Dim1Strd, AddrGen1Dim2Strd, AddrGen2Dim0Strd, AddrGen2Dim1Strd, AddrGen2Dim2Strd, AddrGen0Dim0Bound, AddrGen0Dim1Bound, AddrGen0Dim2Bound, AddrGen1Dim0Bound, AddrGen1Dim1Bound, AddrGen1Dim2Bound, AddrGen2Dim0Bound, AddrGen2Dim1Bound, AddrGen2Dim2Bound)>;
+
+foreach RsIdx = !range(0, 3, 1) in {
+  def DL_VVV_RS#RsIdx : RISCVReg<0, "dl_vvv_rs"#RsIdx>;
+  def DL_VVS_RS#RsIdx : RISCVReg<0, "dl_vvs_rs"#RsIdx>;
+}
+foreach VdIdx = !range(0, 3, 1) in {
+  def DL_VVV_VD#VdIdx : RISCVReg<0, "dl_vvv_vd"#VdIdx>;
+  def DL_VVS_VD#VdIdx : RISCVReg<0, "dl_vvs_vd"#VdIdx>;
+}
+foreach RsIdx = !range(0, 2, 1) in {
+  def SL_VV_RS#RsIdx : RISCVReg<0, "sl_vv_rs"#RsIdx>;
+  def SL_SV_RS#RsIdx : RISCVReg<0, "sl_sv_rs"#RsIdx>;
+}
+foreach VdIdx = !range(0, 2, 1) in {
+  def SL_VV_VD#VdIdx : RISCVReg<0, "sl_vv_vd"#VdIdx>;
+  def SL_SV_VD#VdIdx : RISCVReg<0, "sl_sv_vd"#VdIdx>;
+}
+
+def CompositeRegIdxReg : RegisterClass<"RISCV", [i32], 32, (add DL_VVV_RS0, DL_VVV_RS1, DL_VVV_RS2, DL_VVS_RS0, DL_VVS_RS1, DL_VVS_RS2, DL_VVV_VD0, DL_VVV_VD1, DL_VVV_VD2, DL_VVS_VD0, DL_VVS_VD1, DL_VVS_VD2, SL_VV_RS0, SL_VV_RS1, SL_SV_RS0, SL_SV_RS1, SL_VV_VD0, SL_VV_VD1, SL_SV_VD0, SL_SV_VD1)>;
+
+foreach DimIdx = !range(0, 3, 1) in {
+  def DMADim#DimIdx#Stride : RISCVReg<0, "dma_dim"#DimIdx#"_stride">;
+  def DMADim#DimIdx#Bound : RISCVReg<0, "dma_dim"#DimIdx#"_bound">;
+}
+
+def DMAReg : RegisterClass<"RISCV", [i32], 32, (add DMADim0Stride, DMADim1Stride, DMADim2Stride, DMADim0Bound, DMADim1Bound, DMADim2Bound)>;
+
+def StateReg0 : RISCVReg<0, "state_reg">;
+def StateReg : RegisterClass<"RISCV", [i32], 32, (add StateReg0)>;
+
 //===----------------------------------------------------------------------===//
 // Special registers
 //===----------------------------------------------------------------------===//

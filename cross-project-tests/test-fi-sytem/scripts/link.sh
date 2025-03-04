@@ -1,0 +1,1 @@
+ld.lld -e 0 -Ttext 0x0 --verbose test1.o test2.o -o test.x

@@ -1,0 +1,2 @@
+# /root/tools/llvm/bin/clang -O1 --target=riscv32 -march=rv32gzve64d -mabi=ilp32d --sysroot="/opt/riscv-newlib-32/riscv32-unknown-elf" --gcc-toolchain="/opt/riscv-newlib-32" -S $1 -o $2
+/root/tools/llvm/bin/clang -O1 --target=riscv32 -march=rv32gzve64d -mabi=ilp32d --sysroot="/opt/riscv-newlib-32/riscv32-unknown-elf" --gcc-toolchain="/opt/riscv-newlib-32" -c $1 -o $2

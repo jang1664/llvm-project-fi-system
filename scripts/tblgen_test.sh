@@ -1,6 +1,6 @@
 # llvm-tblgen -o RISCVGenAsmMatcher.inc              --gen-asm-matcher                                                   ../llvm/lib/Target/RISCV/RISCV.td -I../llvm/include -I../llvm/lib/Target/RISCV 
 # llvm-tblgen -o RISCVGenRegisterInfo.inc            --gen-register-info                                                 ../llvm/lib/Target/RISCV/RISCV.td -I../llvm/include -I../llvm/lib/Target/RISCV 
-# llvm-tblgen -o RISCVGenInstrInfo.inc               --gen-instr-info                                                    ../llvm/lib/Target/RISCV/RISCV.td -I../llvm/include -I../llvm/lib/Target/RISCV 
+llvm-tblgen -o RISCVGenInstrInfo.inc               --gen-instr-info                                                    ../llvm/lib/Target/RISCV/RISCV.td -I../llvm/include -I../llvm/lib/Target/RISCV 
 # llvm-tblgen -o RISCVGenAsmMatcher.inc              --gen-asm-matcher                                                   ../llvm/lib/Target/RISCV/RISCV.td -I../llvm/include -I../llvm/lib/Target/RISCV 
 # llvm-tblgen -o RISCVGenAsmWriter.inc               --gen-asm-writer                                                    ../llvm/lib/Target/RISCV/RISCV.td -I../llvm/include -I../llvm/lib/Target/RISCV 
 # llvm-tblgen -o RISCVGenCompressInstEmitter.inc     --gen-compress-inst-emitter                                         ../llvm/lib/Target/RISCV/RISCV.td -I../llvm/include -I../llvm/lib/Target/RISCV 
@@ -20,4 +20,4 @@
 # llvm-tblgen -o RISCVGenPreLegalizeGICombiner.inc   --gen-global-isel-combiner -combiners="RISCVPreLegalizerCombiner"   ../llvm/lib/Target/RISCV/RISCV.td -I../llvm/include -I../llvm/lib/Target/RISCV 
 # llvm-tblgen -o RISCVGenPostLegalizeGICombiner.inc  --gen-global-isel-combiner -combiners="RISCVPostLegalizerCombiner"  ../llvm/lib/Target/RISCV/RISCV.td -I../llvm/include -I../llvm/lib/Target/RISCV 
 
-llvm-tblgen ../llvm/lib/Target/RISCV/RISCV.td -I../llvm/include -I../llvm/lib/Target/RISCV 
+# llvm-tblgen ../llvm/lib/Target/RISCV/RISCV.td -I../llvm/include -I../llvm/lib/Target/RISCV 

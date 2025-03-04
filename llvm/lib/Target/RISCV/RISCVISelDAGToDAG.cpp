@@ -2099,6 +2099,18 @@ void RISCVDAGToDAGISel::Select(SDNode *Node) {
   case ISD::INTRINSIC_VOID: {
     unsigned IntNo = Node->getConstantOperandVal(1);
     switch (IntNo) {
+    // case Intrinsic::riscv_set_dl_vvv_s: {
+    //   SDLoc DL(Node);
+    //   SmallVector<SDValue, 8> Operands;
+    //   Operands.push_back(Node->getOperand(0)); // chain
+    //   for(int i=2; i<Node->getNumOperands(); i++) {
+    //     Operands.push_back(Node->getOperand(i));
+    //   }
+    //   MachineSDNode *LowerInst =
+    //       CurDAG->getMachineNode(RISCV::SET_DL_VVV_S, DL, Node->getValueType(0), Operands);
+    //   ReplaceNode(Node, LowerInst);
+    //   return;
+    // }
     case Intrinsic::riscv_vsseg2:
     case Intrinsic::riscv_vsseg3:
     case Intrinsic::riscv_vsseg4:

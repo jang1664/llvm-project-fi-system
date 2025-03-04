@@ -1,31 +1,10 @@
-// def SDT_RISCV_DL_SET_PROFILE : SDTypeProfile<0, 3, [SDTCisVT<0, i32>, SDTCisVT<1, i32>, SDTCisVT<2, i32> ]>;
-// def SDT_RISCV_DL_FP32_PROFILE : SDTypeProfile<1, 6, [SDTCisVT<0, v128f32>, SDTCisVT<1, iPTR>, SDTCisVT<2, iPTR>, SDTCisVT<3, iPTR>, SDTCisVT<4, i32>, SDTCisVT<5, i32>, SDTCisVT<6, i32>]>;
-
-// def riscv_set_dl_vvv_s : SDNode<"RISCVISD::SET_DL_VVV_S", SDT_RISCV_DL_SET_PROFILE>;
-// def riscv_set_dl_vvv_v : SDNode<"RISCVISD::SET_DL_VVV_S", SDT_RISCV_DL_SET_PROFILE>;
-// def riscv_dl_vvv_mult_f32 : SDNode<"RISCVISD::DL_VVV_MULT_F32", SDT_RISCV_DL_FP32_PROFILE>;
-
-// def : Pat<(riscv_set_dl_vvv_s i32::$idx1, i32::$idx2, i32::$idx3), (SET_DL_VVV_S i32::$idx1, i32::$idx2, i32::$idx3)>;
-// def : Pat<(riscv_set_dl_vvv_v i32::$idx1, i32::$idx2, i32::$idx3), (SET_DL_VVV_V i32::$idx1, i32::$idx2, i32::$idx3)>;
-// def : Pat<(riscv_dl_vvv_mult_f32 v128f32:$a, iPTR:$b, iPTR:$c, iPTR:$d, i32:$e, i32:$f, i32:$g), (DL_VVV_MULT_F32 v128f32:$a, iPTR:$b, iPTR:$c, iPTR:$d, i32:$e, i32:$f, i32:$g)>;
-
-// class RVInstRBase<bits<3> funct3, RISCVOpcode opcode, dag outs,
-//                   dag ins, string opcodestr, string argstr>
-//     : RVInst<outs, ins, opcodestr, argstr, [], InstFormatR> {
-//   bits<5> rs2;
-//   bits<5> rs1;
-//   bits<5> rd;
-
-//   let Inst{25-20} = rs2;
-//   let Inst{19-15} = rs1;
-//   let Inst{14-12} = funct3;
-//   let Inst{11-7} = rd;
-//   let Inst{6-0} = opcode.Value;
-// }
-
 def uimm12 : RISCVUImmLeafOp<12>;
 def F32GPR : RegisterOperand<F32VR>;
 def F16GPR : RegisterOperand<F16VR>;
+def fpint_tuimm1 : TImmLeaf<XLenVT, [{return isUInt<2>(Imm);}]>;
+def fpint_tuimm2 : TImmLeaf<XLenVT, [{return isUInt<2>(Imm);}]>;
+def fpint_tuimm5 : TImmLeaf<XLenVT, [{return isUInt<5>(Imm);}]>;
+def fpint_tuimm12 : TImmLeaf<XLenVT, [{return isUInt<12>(Imm);}]>;
 
 let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
   def SET_DL_VVV_S : RVInst<(outs), (ins uimm5:$idx1, uimm5:$idx2, uimm5:$idx3), "set_dl_vvv_s", "$idx1, $idx2, $idx3", [], InstFormatOther> {
@@ -467,4 +446,15 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{11-7} = 0;
     let Inst{6-0}  = 0b0110100;
   }
+}
+
+// def : Pat<(vt (OpNode (vt GPR:$rs1))), (Inst GPR:$rs1)>;
+// def : Pat<
+//   (int_riscv_set_dl_vvv_s (i32 uimm5:$idx1), (i32 uimm5:$idx2), (i32 uimm5:$idx3)),
+//   (SET_DL_VVV_S (i32 uimm5:$idx1), (i32 uimm5:$idx2), (i32 uimm5:$idx3))>;
+
+let Predicates = [HasVendorXfpint, IsRV32] in {
+  def : Pat<
+    (int_riscv_set_dl_vvv_s fpint_tuimm5:$idx1, fpint_tuimm5:$idx2, fpint_tuimm5:$idx3),
+    (SET_DL_VVV_S fpint_tuimm5:$idx1, fpint_tuimm5:$idx2, fpint_tuimm5:$idx3)>;
 }

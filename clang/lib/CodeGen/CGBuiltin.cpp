@@ -23420,6 +23420,10 @@ Value *CodeGenFunction::EmitRISCVBuiltinExpr(unsigned BuiltinID,
 
     return Store;
   }
+  // Xfpint
+  case RISCV::BI__builtin_riscv_fpint_set_dl_vvv_s:
+    ID = Intrinsic::riscv_set_dl_vvv_s;
+    break;
   // XCValu
   case RISCV::BI__builtin_riscv_cv_alu_addN:
     ID = Intrinsic::riscv_cv_alu_addN;

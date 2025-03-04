@@ -1,27 +1,9 @@
 #!/bin/bash
-
-mkdir -p ./output
-
-# get file ext and filename without ext
-fn_base=$(basename $1)
-fn_ext=$(echo "$fn_base" | sed 's/.*\.\(.*\)/\1/')
-fn_no_ext=$(echo "$fn_base" | sed 's/\(.*\)\..*/\1/')
-
-# emit llvm ir if .cpp, else move .ll to output
-if [[ $fn_ext == "cpp" ]]; then
-  clang -O1 --target=riscv32 -march=rv32g -mabi=ilp32d -S -emit-llvm $1 -I../test_cpp -o output/$fn_no_ext.ll
-  # clang -O0 --target=INODE -S -emit-llvm $1 -I../test_cpp -o output/$fn_no_ext.ll
-elif [[ $fn_ext == "ll" ]]; then
-  cp $1 output/$fn_no_ext.ll
-else
-  echo "Invalid file extension $fn_ext"
-fi
-
 # generate .s with debug flag
-llc --march=riscv32 output/$fn_no_ext.ll -o ./output/$fn_no_ext.s \
+llc --mtriple=riscv32 -mattr=+xfpint $1 -o $2 \
   --debug-only=isel \
   --debug-pass=Details \
-  -print-after-all
+  -print-after-all &> ./logs/llc.log
 
   # -debug \
   # -force-hardware-loops \

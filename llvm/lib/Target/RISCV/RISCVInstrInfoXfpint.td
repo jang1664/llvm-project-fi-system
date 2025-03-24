@@ -55,15 +55,14 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{10}    = en2;
     let Inst{9}     = en1;
     let Inst{8-7}   = 0;
-    let Inst{6-0}   = 0b0001100;
+    let Inst{6-0}   = 0b0001000;
   }
 
-  class F_MUR<bits<7> funct7, bits<3> funct3, string opcodestr> : RVInst<(outs), (ins GPR:$rs1, GPR:$rs2, uimm1:$en1, uimm1:$en2, uimm1:$en3), opcodestr, "$rs1, $rs2, $en1, $en2, $en3", [], InstFormatOther> {
+  class F_MUR<bits<7> funct7, bits<3> funct3, string opcodestr> : RVInst<(outs), (ins GPR:$rs1, GPR:$rs2, uimm1:$en1, uimm1:$en2), opcodestr, "$rs1, $rs2, $en1, $en2", [], InstFormatOther> {
     bits<5> rs1;
     bits<5> rs2;
     bits<1> en1;
     bits<1> en2;
-    bits<1> en3;
 
     let hasSideEffects = 1;
     let mayLoad = 1;
@@ -73,11 +72,11 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{24-20} = rs2;
     let Inst{19-15} = rs1;
     let Inst{14-12} = funct3;
-    let Inst{11}    = en3;
+    let Inst{11}    = 0;
     let Inst{10}    = en2;
     let Inst{9}     = en1;
     let Inst{8-7}   = 0;
-    let Inst{6-0}   = 0b0010000;
+    let Inst{6-0}   = 0b0001100;
   }
 
   class F_DMA<bits<3> funct3, string opcodestr> : RVInst<(outs), (ins GPR:$rs1, GPR:$rs2, GPR:$rs3, uimm2:$id), opcodestr, "$rs1, $rs2, $rs3, $id", [], InstFormatOther> {
@@ -107,7 +106,7 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{31-15} = 0;
     let Inst{14-12} = funct3;
     let Inst{11-7}   = 0;
-    let Inst{6-0}   = 0b0100000;
+    let Inst{6-0}   = 0b0011100;
   }
 }
 
@@ -166,7 +165,7 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{10}    = 0;
     let Inst{9}     = en1;
     let Inst{8-7}   = 0;
-    let Inst{6-0}   = 0b0001100;
+    let Inst{6-0}   = 0b0001000;
   }
 
   def loadw_mm : RVInst<(outs), (ins GPR:$rs1, GPR:$rs2, uimm1:$widx, uimm1:$en1), "loadw.mm", "$rs1, $rs2, $widx, $en1", [], InstFormatOther> {
@@ -189,7 +188,7 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{10}    = 0;
     let Inst{9}     = en1;
     let Inst{8-7}   = 0;
-    let Inst{6-0}   = 0b0001100;
+    let Inst{6-0}   = 0b0001000;
   }
 
   def loadz_mm : RVInst<(outs), (ins GPR:$rs1, uimm1:$widx, uimm1:$en1), "loadz.mm", "$rs1, $widx, $en1", [], InstFormatOther> {
@@ -211,7 +210,7 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{10}    = 0;
     let Inst{9}     = en1;
     let Inst{8-7}   = 0;
-    let Inst{6-0}   = 0b0001100;
+    let Inst{6-0}   = 0b0001000;
   }
 
   def loads_mm : RVInst<(outs), (ins GPR:$rs1, uimm1:$widx, uimm1:$en1), "loads.mm", "$rs1, $widx, $en1", [], InstFormatOther> {
@@ -233,7 +232,7 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{10}    = 0;
     let Inst{9}     = en1;
     let Inst{8-7}   = 0;
-    let Inst{6-0}   = 0b0001100;
+    let Inst{6-0}   = 0b0001000;
   }
 
 
@@ -258,7 +257,7 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{10}    = 0;
     let Inst{9}     = en1;
     let Inst{8-7}   = 0;
-    let Inst{6-0}   = 0b0001100;
+    let Inst{6-0}   = 0b0001000;
   }
 
   def gemv_acc_mm : F_Mat<0b101, "gemv_acc.mm">;
@@ -284,7 +283,7 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{19-15} = rs1;
     let Inst{14-12} = 0b000;
     let Inst{11-7}  = rd;
-    let Inst{6-0}   = 0b0101100;
+    let Inst{6-0}   = 0b0100010;
   }
 
   def store_shared : RVInst<(outs), (ins GPR:$rs2, GPRMem:$rs1, simm12:$imm12), "st.shared", "$rs2, ${imm12}(${rs1})", [], InstFormatOther> {
@@ -301,7 +300,7 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{19-15} = rs1;
     let Inst{14-12} = 0b001;
     let Inst{11-7}  = imm12{4-0};
-    let Inst{6-0}   = 0b0110000;
+    let Inst{6-0}   = 0b0100100;
   }
 
   def dma_setup_dram  : F_DMA<0b000, "dma_setup_dram">;
@@ -322,7 +321,7 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{19-15} = 0;
     let Inst{14-12} = 0b100;
     let Inst{11-7}  = 0;
-    let Inst{6-0}   = 0b0110000;
+    let Inst{6-0}   = 0b0010000;
   }
 
   def rpt_start : RVInst<(outs GPR:$rd), (ins GPR:$rs1), "rpt_start", "$rd, $rs1", [], InstFormatOther> {
@@ -337,7 +336,7 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{19-15} = rs1;
     let Inst{14-12} = 0b000;
     let Inst{11-7}  = rd;
-    let Inst{6-0}   = 0b0011000;
+    let Inst{6-0}   = 0b0010100;
   }
 
   def rpt_end : RVInst<(outs GPR:$rd), (ins simm12:$imm12), "rpt_end", "$rd, $imm12", [], InstFormatOther> {

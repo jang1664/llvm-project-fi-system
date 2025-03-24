@@ -5,51 +5,50 @@
 	.type	test,@function
 test:                                   # @test
 # %bb.0:                                # %entry
-  set_dl_vvv_s 1, 2, 3
-  set_dl_vvv_v 1, 2, 3
-  dl.vvv.f32.mult 1, 1, 1
-  dl.vvv.f32.mac 1, 1, 1
-  dl.vvv.f16.add 1, 1, 1
-  dl.vvv.f32.add 1, 1, 1
-  set_dl_vvs_s 1, 2, 3
-  set_dl_vvs_v 1, 2, 3
-  dl.vvs.f32.mult 1, 1, 1
-  dl.vvs.f32.add 1, 1, 1
-  dl.vvs.f32.div 1, 1, 1
-  set_sl_vv_s 1, 2
-  set_sl_vv_v 1, 2
-  sl.vv.f32.exp 1, 1
-  sl.vv.f16_to_f32 1, 1
-  sl.vv.f32_to_f16 1, 1
-  sl.vv.reduce_sum 1, 1
-  sl.vv.swish_glu 1, 1
-  sl.vv.relu 1, 1
-  sl.vv.gelu 1, 1
-  load_mxu 1, t1
-  dl.vvm.gemv f32v0, 1, t1, t2
-  set_addr_cfg.mod0.dim0 t1, t2
-  set_addr_cfg.mod0.dim1 t1, t2
-  set_addr_cfg.mod0.dim2 t1, t2
-  set_addr_cfg.mod1.dim0 t1, t2
-  set_addr_cfg.mod1.dim1 t1, t2
-  set_addr_cfg.mod1.dim2 t1, t2
-  set_addr_cfg.mod2.dim0 t1, t2
-  set_addr_cfg.mod2.dim1 t1, t2
-  set_addr_cfg.mod2.dim2 t1, t2
-  sw_glu f32v0, f32v2
-  relu f32v0, f32v2
-  gelu f32v0, f32v2
-  rpt t1, 10
-  dma.setup.dram 1, t1, t2, t3, t4
-  dma.setup.sram 1, t1, t2, t3, t4
-  dma.load.start 1
-  dma.store.start 1
-  dma.wait 1
+start:
+  rpt_start t1, t2
+
+  set_addr_cfg.0 t1, t2, t3
+  set_addr_cfg.8 t1, t2, t3
+  set_addr_cfg.31 t1, t2, t3
+
+  mul.m.vv.f32 t1, t2, t3, 0, 0, 0 
+  add.m.vv.f16 t1, t2, t3, 0, 0, 1 
+  add.m.vv.f32 t1, t2, t3, 0, 1, 0 
+  mul.m.vs.f32 t1, t2, t3, 0, 1, 1 
+  div.m.vs.f32 t1, t2, t3, 1, 1, 1 
+
+  set_loadw.mm t1, t2, 1
+  loadw.mm t1, t2, 1, 1
+  loadz.mm t1, 1, 1
+  loads.mm t1, 1, 1
+  gemv.mm t1, t2, 1, 1, 1 
+  gemv_acc.mm   t1, t2, t3, 1, 1, 1, 1
+  gemv_acc_s.mm t1, t2, t3, 1, 1, 1, 1
+  gemv_s.mm     t1, t2, t3, 1, 1, 1, 1
+
+  exp.m.v.f32    t1, t2, 1, 1, 1
+  f16_to_f32.m.v t1, t2, 1, 1, 1
+  f32_to_f16.m.v t1, t2, 1, 1, 1
+  rsum.m.v.f32   t1, t2, 1, 1, 1
+  relu.m.v.f32   t1, t2, 1, 1, 1
+
+  ld.shared t1, 2(t2)
+  st.shared t1, 2(t2)
+
+  dma_setup_dram  t1, t2, t3, 0
+  dma_setup_sram  t1, t2, t3, 1
+  dma_load_start  t1, t2, t3, 2
+  dma_store_start t1, t2, t3, 3
+  dma_wait 2
+
+end:
+  rpt_end t1, 100
+
   halt
   irq
-
-
 	ret
+
 .Lfunc_end0:
 	.size	test, .Lfunc_end0-test
                                         # -- End function

@@ -246,27 +246,27 @@ static DecodeStatus DecodeVRRegisterClass(MCInst &Inst, uint32_t RegNo,
   return MCDisassembler::Success;
 }
 
-static DecodeStatus DecodeF32VRRegisterClass(MCInst &Inst, uint32_t RegNo,
-                                             uint64_t Address,
-                                             const MCDisassembler *Decoder) {
-  if (RegNo >= 4)
-    return MCDisassembler::Fail;
+// static DecodeStatus DecodeF32VRRegisterClass(MCInst &Inst, uint32_t RegNo,
+//                                              uint64_t Address,
+//                                              const MCDisassembler *Decoder) {
+//   if (RegNo >= 4)
+//     return MCDisassembler::Fail;
 
-  MCRegister Reg = RISCV::F32V0 + RegNo;
-  Inst.addOperand(MCOperand::createReg(Reg));
-  return MCDisassembler::Success;
-}
+//   MCRegister Reg = RISCV::F32V0 + RegNo;
+//   Inst.addOperand(MCOperand::createReg(Reg));
+//   return MCDisassembler::Success;
+// }
 
-static DecodeStatus DecodeF16VRRegisterClass(MCInst &Inst, uint32_t RegNo,
-                                             uint64_t Address,
-                                             const MCDisassembler *Decoder) {
-  if (RegNo >= 4)
-    return MCDisassembler::Fail;
+// static DecodeStatus DecodeF16VRRegisterClass(MCInst &Inst, uint32_t RegNo,
+//                                              uint64_t Address,
+//                                              const MCDisassembler *Decoder) {
+//   if (RegNo >= 4)
+//     return MCDisassembler::Fail;
 
-  MCRegister Reg = RISCV::F16V0 + RegNo;
-  Inst.addOperand(MCOperand::createReg(Reg));
-  return MCDisassembler::Success;
-}
+//   MCRegister Reg = RISCV::F16V0 + RegNo;
+//   Inst.addOperand(MCOperand::createReg(Reg));
+//   return MCDisassembler::Success;
+// }
 
 static DecodeStatus DecodeVRM2RegisterClass(MCInst &Inst, uint32_t RegNo,
                                             uint64_t Address,

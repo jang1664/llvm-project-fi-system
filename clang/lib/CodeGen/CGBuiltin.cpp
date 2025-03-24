@@ -23424,6 +23424,12 @@ Value *CodeGenFunction::EmitRISCVBuiltinExpr(unsigned BuiltinID,
   case RISCV::BI__builtin_riscv_fpint_set_dl_vvv_s:
     ID = Intrinsic::riscv_set_dl_vvv_s;
     break;
+  case RISCV::BI__builtin_riscv_fpint_set_dl_vvv_v:
+    ID = Intrinsic::riscv_set_dl_vvv_v;
+    break;
+  case RISCV::BI__builtin_riscv_fpint_dl_vvv_f32_mult:
+    ID = Intrinsic::riscv_dl_vvv_f32_mult;
+    break;
   // XCValu
   case RISCV::BI__builtin_riscv_cv_alu_addN:
     ID = Intrinsic::riscv_cv_alu_addN;

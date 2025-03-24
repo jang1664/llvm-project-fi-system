@@ -1,6 +1,7 @@
 #!/bin/bash
 # generate .s with debug flag
 llc --mtriple=riscv32 -mattr=+xfpint $1 -o $2 \
+  -filetype=obj \
   --debug-only=isel \
   --debug-pass=Details \
   -print-after-all &> ./logs/llc.log

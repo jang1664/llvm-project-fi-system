@@ -48,13 +48,13 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
   }
 
   class DL_VVV<bits<3> funct3, string opcodestr, string argstr>
-      : RVInst<(outs), (ins uimm1:$st_en, uimm1:$ld_en0, uimm1:$ld_en1), opcodestr, argstr, [], InstFormatOther> {
+      : RVInst<(outs), (ins uimm1:$st_en, uimm1:$ld_en0, uimm1:$ld_en1, GPR:$rs1, GPR:$rs2, GPR:$rs3), opcodestr, argstr, [], InstFormatOther> {
     bits<1> st_en;
     bits<1> ld_en0;
     bits<1> ld_en1;
 
-    let Defs = [F32V0, F32V2, F32V4, F32V6];
-    let Uses = [F32V0, F32V2, F32V4, F32V6];
+    // let Defs = [F32V0, F32V2, F32V4, F32V6];
+    // let Uses = [F32V0, F32V2, F32V4, F32V6];
     let hasSideEffects = 1;
     let mayLoad = 1;
     let mayStore = 1;
@@ -135,7 +135,7 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{24-15} = 0;
     let Inst{14-12} = funct3;
     let Inst{11-7} = 0;
-    let Inst{6-0}  = 0b0111000;
+    let Inst{6-0}  = 0b0011101;
   }
 
   def DL_VVS_F32_MULT : DL_VVS<0b000, "dl.vvs.f32.mult", "$st_en, $ld_en0, $ld_en1">;
@@ -198,7 +198,7 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{24-15} = 0;
     let Inst{14-12} = funct3;
     let Inst{11-7} = 0;
-    let Inst{6-0}  = 0b0011100;
+    let Inst{6-0}  = 0b0100100;
   }
 
   def SL_VV_F32_EXP    : SL_VV<0b000, "sl.vv.f32.exp", "$st_en, $ld_en1">;
@@ -457,4 +457,12 @@ let Predicates = [HasVendorXfpint, IsRV32] in {
   def : Pat<
     (int_riscv_set_dl_vvv_s fpint_tuimm5:$idx1, fpint_tuimm5:$idx2, fpint_tuimm5:$idx3),
     (SET_DL_VVV_S fpint_tuimm5:$idx1, fpint_tuimm5:$idx2, fpint_tuimm5:$idx3)>;
+
+  def : Pat<
+    (int_riscv_set_dl_vvv_v fpint_tuimm5:$idx1, fpint_tuimm5:$idx2, fpint_tuimm5:$idx3),
+    (SET_DL_VVV_V fpint_tuimm5:$idx1, fpint_tuimm5:$idx2, fpint_tuimm5:$idx3)>;
+  
+  def : Pat<
+    (int_riscv_dl_vvv_f32_mult GPR:$rs1, GPR:$rs2, GPR:$rs3, fpint_tuimm1:$en1, fpint_tuimm1:$en2, fpint_tuimm1:$en3),
+    (DL_VVV_F32_MULT fpint_tuimm1:$en1, fpint_tuimm1:$en2, fpint_tuimm1:$en3, GPR:$rs1, GPR:$rs2, GPR:$rs3)>;
 }

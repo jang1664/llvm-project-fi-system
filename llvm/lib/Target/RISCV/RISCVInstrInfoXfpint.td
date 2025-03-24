@@ -347,7 +347,7 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let mayLoad = 0;
     let mayStore = 1;
 
-    let isBranch = 1;
+    // let isBranch = 1;
     let isTerminator = 1;
 
     let Inst{31-20} = imm12;

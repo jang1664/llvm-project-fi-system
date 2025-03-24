@@ -27,11 +27,11 @@ start:
   gemv_acc_s.mm t1, t2, t3, 1, 1, 1, 1
   gemv_s.mm     t1, t2, t3, 1, 1, 1, 1
 
-  exp.m.v.f32    t1, t2, 1, 1, 1
-  f16_to_f32.m.v t1, t2, 1, 1, 1
-  f32_to_f16.m.v t1, t2, 1, 1, 1
-  rsum.m.v.f32   t1, t2, 1, 1, 1
-  relu.m.v.f32   t1, t2, 1, 1, 1
+  exp.m.v.f32    t1, t2, 1, 1
+  f16_to_f32.m.v t1, t2, 1, 1
+  f32_to_f16.m.v t1, t2, 1, 1
+  rsum.m.v.f32   t1, t2, 1, 1
+  relu.m.v.f32   t1, t2, 1, 1
 
   ld.shared t1, 2(t2)
   st.shared t1, 2(t2)

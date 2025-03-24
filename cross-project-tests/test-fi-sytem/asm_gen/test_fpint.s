@@ -35,7 +35,7 @@ Disassembly of section .strtab:
 Disassembly of section .text:
 
 00000000 <test>:
-       0: 00038318     	rpt_start	t1, t2
+       0: 00038314     	rpt_start	t1, t2
        4: e0730000     	set_addr_cfg.0	t1, t2, t3
        8: e0730400     	set_addr_cfg.8	t1, t2, t3
        c: e0730f80     	set_addr_cfg.31	t1, t2, t3
@@ -44,31 +44,31 @@ Disassembly of section .text:
       18: e0732404     	add.m.vv.f32	t1, t2, t3, 0x0, 0x1, 0x0
       1c: e0733c04     	mul.m.vs.f32	t1, t2, t3, 0x0, 0x1, 0x1
       20: e0734e04     	div.m.vs.f32	t1, t2, t3, 0x1, 0x1, 0x1
-      24: 0073020c     	set_loadw.mm	t1, t2, 0x1
-      28: 0273120c     	loadw.mm	t1, t2, 0x1, 0x1
-      2c: 0203220c     	loadz.mm	t1, 0x1, 0x1
-      30: 0203320c     	loads.mm	t1, 0x1, 0x1
-      34: 3a034a0c     	gemv.mm	t1, t2, 0x1, 0x1, 0x1
-      38: e2735e0c     	gemv_acc.mm	t1, t2, t3, 0x1, 0x1, 0x1, 0x1
-      3c: e2736e0c     	gemv_acc_s.mm	t1, t2, t3, 0x1, 0x1, 0x1, 0x1
-      40: e2737e0c     	gemv_s.mm	t1, t2, t3, 0x1, 0x1, 0x1, 0x1
-      44: 00730e10     	exp.m.v.f32	t1, t2, 0x1, 0x1, 0x1
-      48: 00731e10     	f16_to_f32.m.v	t1, t2, 0x1, 0x1, 0x1
-      4c: 00732e10     	f32_to_f16.m.v	t1, t2, 0x1, 0x1, 0x1
-      50: 00733e10     	rsum.m.v.f32	t1, t2, 0x1, 0x1, 0x1
-      54: 00734e10     	relu.m.v.f32	t1, t2, 0x1, 0x1, 0x1
-      58: 0023832c     	ld.shared	t1, 0x2(t2)
-      5c: 00639130     	st.shared	t1, 0x2(t2)
+      24: 00730208     	set_loadw.mm	t1, t2, 0x1
+      28: 02731208     	loadw.mm	t1, t2, 0x1, 0x1
+      2c: 02032208     	loadz.mm	t1, 0x1, 0x1
+      30: 02033208     	loads.mm	t1, 0x1, 0x1
+      34: 3a034a08     	gemv.mm	t1, t2, 0x1, 0x1, 0x1
+      38: e2735e08     	gemv_acc.mm	t1, t2, t3, 0x1, 0x1, 0x1, 0x1
+      3c: e2736e08     	gemv_acc_s.mm	t1, t2, t3, 0x1, 0x1, 0x1, 0x1
+      40: e2737e08     	gemv_s.mm	t1, t2, t3, 0x1, 0x1, 0x1, 0x1
+      44: 0073060c     	exp.m.v.f32	t1, t2, 0x1, 0x1
+      48: 0073160c     	f16_to_f32.m.v	t1, t2, 0x1, 0x1
+      4c: 0073260c     	f32_to_f16.m.v	t1, t2, 0x1, 0x1
+      50: 0073360c     	rsum.m.v.f32	t1, t2, 0x1, 0x1
+      54: 0073460c     	relu.m.v.f32	t1, t2, 0x1, 0x1
+      58: 00238322     	ld.shared	t1, 0x2(t2)
+      5c: 00639124     	st.shared	t1, 0x2(t2)
       60: e0730014     	dma_setup_dram	t1, t2, t3, 0x0
       64: e2731014     	dma_setup_sram	t1, t2, t3, 0x1
       68: e4732014     	dma_load_start	t1, t2, t3, 0x2
       6c: e6733014     	dma_store_start	t1, t2, t3, 0x3
-      70: 04004030     	dma_wait	0x2
+      70: 04004010     	dma_wait	0x2
 
 00000074 <end>:
       74: 06001318     	rpt_end	t1, 0x60
-      78: 00000020     	halt
-      7c: 00001020     	irq
+      78: 0000001c     	halt
+      7c: 0000101c     	irq
       80: 00008067     	jalr	zero, 0x0(ra)
 
 Disassembly of section .comment:

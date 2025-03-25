@@ -59,17 +59,18 @@ Disassembly of section .text:
       54: 0073460c     	relu.m.v.f32	t1, t2, 0x1, 0x1
       58: 00238322     	ld.shared	t1, 0x2(t2)
       5c: 00639124     	st.shared	t1, 0x2(t2)
-      60: e0730014     	dma_setup_dram	t1, t2, t3, 0x0
-      64: e2731014     	dma_setup_sram	t1, t2, t3, 0x1
-      68: e4732014     	dma_load_start	t1, t2, t3, 0x2
-      6c: e6733014     	dma_store_start	t1, t2, t3, 0x3
-      70: 04004010     	dma_wait	0x2
+      60: 00031020     	vmask_set	t1
+      64: e0730014     	dma_setup_dram	t1, t2, t3, 0x0
+      68: e2731014     	dma_setup_sram	t1, t2, t3, 0x1
+      6c: e4732014     	dma_load_start	t1, t2, t3, 0x2
+      70: e6733014     	dma_store_start	t1, t2, t3, 0x3
+      74: 04004010     	dma_wait	0x2
 
-00000074 <end>:
-      74: 06001318     	rpt_end	t1, 0x60
-      78: 0000001c     	halt
-      7c: 0000101c     	irq
-      80: 00008067     	jalr	zero, 0x0(ra)
+00000078 <end>:
+      78: 06001318     	rpt_end	t1, 0x60
+      7c: 0000001c     	halt
+      80: 0000101c     	irq
+      84: 00008067     	jalr	zero, 0x0(ra)
 
 Disassembly of section .comment:
 
@@ -152,7 +153,7 @@ Disassembly of section .symtab:
 		...
       3c: 00020000     	set_addr_cfg.0	tp, zero, zero
       40: 0000004e     	<unknown>
-      44: 00000074     	<unknown>
+      44: 00000078     	<unknown>
       48: 00000000     	set_addr_cfg.0	zero, zero, zero
       4c: 00020000     	set_addr_cfg.0	tp, zero, zero
       50: 00000052     	<unknown>
@@ -163,5 +164,5 @@ Disassembly of section .symtab:
       6c: 00050000     	set_addr_cfg.0	a0, zero, zero
       70: 0000000a     	<unknown>
       74: 00000000     	set_addr_cfg.0	zero, zero, zero
-      78: 00000084     	<unknown>
+      78: 00000088     	<unknown>
       7c: 00020012     	<unknown>

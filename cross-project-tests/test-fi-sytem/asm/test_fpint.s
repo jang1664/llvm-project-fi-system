@@ -36,6 +36,8 @@ start:
   ld.shared t1, 2(t2)
   st.shared t1, 2(t2)
 
+  vmask_set t1
+
   dma_setup_dram  t1, t2, t3, 0
   dma_setup_sram  t1, t2, t3, 1
   dma_load_start  t1, t2, t3, 2

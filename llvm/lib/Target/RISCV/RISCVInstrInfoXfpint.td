@@ -303,6 +303,21 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{6-0}   = 0b0100100;
   }
 
+  def vmask_set : RVInst<(outs), (ins GPRMem:$rs1), "vmask_set", "$rs1", [], InstFormatOther> {
+    bits<5> rs1;
+
+    let hasSideEffects = 1;
+    let mayLoad = 0;
+    let mayStore = 0;
+
+    let Inst{31-25} = 0;
+    let Inst{24-20} = 0;
+    let Inst{19-15} = rs1;
+    let Inst{14-12} = 0b001;
+    let Inst{11-7}  = 0;
+    let Inst{6-0}   = 0b0100000;
+  }
+
   def dma_setup_dram  : F_DMA<0b000, "dma_setup_dram">;
   def dma_setup_sram  : F_DMA<0b001, "dma_setup_sram">;
   def dma_load_start  : F_DMA<0b010, "dma_load_start">;

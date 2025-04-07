@@ -43,10 +43,10 @@ start:
 
   vmask_set t1
 
-  dma_setup_dram  t1, t2, t3, 0
-  dma_setup_sram  t1, t2, t3, 1
-  dma_load_start  t1, t2, t3, 2
-  dma_store_start t1, t2, t3, 3
+  dma_setup_dram  t1, t2, t3
+  dma_setup_sram  t1, t2, t3
+  dma_load_start  t1, t2, t3
+  dma_store_start t1, t2, t3
 
   halt
   irq

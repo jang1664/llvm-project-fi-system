@@ -79,18 +79,17 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{6-0}   = 0b0011111;
   }
 
-  class F_DMA<bits<3> funct3, string opcodestr> : RVInst<(outs), (ins GPR:$rs1, GPR:$rs2, GPR:$rs3, uimm2:$id), opcodestr, "$rs1, $rs2, $rs3, $id", [], InstFormatOther> {
+  class F_DMA<bits<3> funct3, string opcodestr> : RVInst<(outs), (ins GPR:$rs1, GPR:$rs2, GPR:$rs3), opcodestr, "$rs1, $rs2, $rs3", [], InstFormatOther> {
     bits<5> rs1;
     bits<5> rs2;
     bits<5> rs3;
-    bits<2> id;
 
     let hasSideEffects = 1;
     let mayLoad = 0;
     let mayStore = 0;
 
     let Inst{31-27} = rs3;
-    let Inst{26-25} = id;
+    let Inst{26-25} = 0;
     let Inst{24-20} = rs2;
     let Inst{19-15} = rs1;
     let Inst{14-12} = funct3;

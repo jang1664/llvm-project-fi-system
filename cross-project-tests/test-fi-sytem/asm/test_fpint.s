@@ -34,6 +34,9 @@ start:
   f32_to_f16.m.v t1, t2, 1, 1
   rsum.m.v.f32   t1, t2, 1, 1
   relu.m.v.f32   t1, t2, 1, 1
+  mv.m.v.f32     t1, t2, 1, 1
+  neg.m.v.f32    t1, t2, 1, 1
+  zero.m.v.f32   t1, t2, 1, 1
 
   ld.shared t1, 2(t2)
   st.shared t1, 2(t2)

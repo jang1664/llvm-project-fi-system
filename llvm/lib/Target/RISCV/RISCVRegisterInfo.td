@@ -799,6 +799,7 @@ foreach m = LMULList in {
 // defvar NumFp32VectorRegisters = 4;
 defvar NumLane = 32;
 defvar AddrGenModuleName = 32;
+defvar CoodGenModuleName = 32;
 
 // // fp16 vector registers
 // foreach Index = !range(0, NumFp16VectorRegisters, 1) in {
@@ -834,6 +835,13 @@ foreach AddrModuleIdx = !range(0, AddrGenModuleName, 1) in {
   }
 }
 
+foreach CoodModuleIdx = !range(0, CoodGenModuleName, 1) in {
+  foreach DimIdx = !range(0, 3, 1) in {
+    def CoodGen#CoodModuleIdx#Dim#DimIdx#Base : RISCVReg<0, "cood_gen"#CoodModuleIdx#"_dim"#DimIdx#"_base">;
+    def CoodGen#CoodModuleIdx#Dim#DimIdx#Incr : RISCVReg<0, "cood_gen"#CoodModuleIdx#"_dim"#DimIdx#"_incr">;
+  }
+}
+
 def AddrGenReg : RegisterClass<"RISCV", [i32], 32, 
   (add AddrGen0Dim0Strd, AddrGen0Dim1Strd, AddrGen0Dim2Strd,
        AddrGen1Dim0Strd, AddrGen1Dim1Strd, AddrGen1Dim2Strd,
@@ -842,6 +850,12 @@ def AddrGenReg : RegisterClass<"RISCV", [i32], 32,
        AddrGen1Dim0Bound, AddrGen1Dim1Bound, AddrGen1Dim2Bound,
        AddrGen2Dim0Bound, AddrGen2Dim1Bound, AddrGen2Dim2Bound)>;
 
+def CoodGenReg : RegisterClass<"RISCV", [i32], 32,
+  (add
+    CoodGen0Dim0Base, CoodGen0Dim0Incr, CoodGen0Dim1Base, CoodGen0Dim1Incr, CoodGen0Dim2Base, CoodGen0Dim2Incr,
+    CoodGen1Dim0Base, CoodGen1Dim0Incr, CoodGen1Dim1Base, CoodGen1Dim1Incr, CoodGen1Dim2Base, CoodGen1Dim2Incr,
+    CoodGen2Dim0Base, CoodGen2Dim0Incr, CoodGen2Dim1Base, CoodGen2Dim1Incr, CoodGen2Dim2Base, CoodGen2Dim2Incr
+  )>;
 // foreach RsIdx = !range(0, 3, 1) in {
 //   def DL_VVV_RS#RsIdx : RISCVReg<0, "dl_vvv_rs"#RsIdx>;
 //   def DL_VVS_RS#RsIdx : RISCVReg<0, "dl_vvs_rs"#RsIdx>;

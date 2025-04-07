@@ -29,7 +29,7 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{10}    = en2;
     let Inst{9}     = en1;
     let Inst{8-7}   = 0;
-    let Inst{6-0}   = 0b0000100;
+    let Inst{6-0}   = 0b1011011;
   }
 
   class F_Mat<bits<3> funct3, string opcodestr> : RVInst<(outs), (ins GPR:$rs1, GPR:$rs2, GPR:$rs3, uimm1:$widx, uimm1:$en1, uimm1:$en2, uimm1:$en3), opcodestr, "$rs1, $rs2, $rs3, $widx, $en1, $en2, $en3", [], InstFormatOther> {
@@ -55,7 +55,7 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{10}    = en2;
     let Inst{9}     = en1;
     let Inst{8-7}   = 0;
-    let Inst{6-0}   = 0b0001000;
+    let Inst{6-0}   = 0b1111011;
   }
 
   class F_MUR<bits<7> funct7, bits<3> funct3, string opcodestr> : RVInst<(outs), (ins GPR:$rs1, GPR:$rs2, uimm1:$en1, uimm1:$en2), opcodestr, "$rs1, $rs2, $en1, $en2", [], InstFormatOther> {
@@ -76,7 +76,7 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{10}    = en2;
     let Inst{9}     = en1;
     let Inst{8-7}   = 0;
-    let Inst{6-0}   = 0b0001100;
+    let Inst{6-0}   = 0b0011111;
   }
 
   class F_DMA<bits<3> funct3, string opcodestr> : RVInst<(outs), (ins GPR:$rs1, GPR:$rs2, GPR:$rs3, uimm2:$id), opcodestr, "$rs1, $rs2, $rs3, $id", [], InstFormatOther> {
@@ -95,7 +95,7 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{19-15} = rs1;
     let Inst{14-12} = funct3;
     let Inst{11-7}   = 0;
-    let Inst{6-0}   = 0b0010100;
+    let Inst{6-0}   = 0b0111111;
   }
 
   class F_CTRL<bits<3> funct3, string opcodestr> : RVInst<(outs), (ins), opcodestr, "", [], InstFormatOther> {
@@ -106,14 +106,27 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{31-15} = 0;
     let Inst{14-12} = funct3;
     let Inst{11-7}   = 0;
-    let Inst{6-0}   = 0b0011100;
+    let Inst{6-0}   = 0b1011111;
+  }
+
+  class F_SYNC<bits<3> funct3, string opcodestr> : RVInst<(outs), (ins uimm5:$imm), opcodestr, "$imm", [], InstFormatOther> {
+    bits<5> imm;
+    
+    let hasSideEffects = 1;
+    let mayLoad = 0;
+    let mayStore = 0;
+
+    let Inst{31-15} = 0;
+    let Inst{14-12} = funct3;
+    let Inst{11-7}  = imm;
+    let Inst{6-0}   = 0b1110111;
   }
 }
 
 
 // instructions
 let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
-  foreach I = !range(0, 32, 1) in {
+  foreach I = !range(0, 3, 1) in {
     def set_addr_cfg_#I : RVInst<(outs), (ins GPR:$rs1, GPR:$rs2, GPR:$rs3), "set_addr_cfg."#I, "$rs1, $rs2, $rs3", [], InstFormatOther> {
       bits<5> rs1;
       bits<5> rs2;
@@ -134,9 +147,34 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
       let Inst{24-20} = rs2;
       let Inst{19-15} = rs1;
       let Inst{14-12} = 0;
-      let Inst{12} = 0;
-      let Inst{11-7} = I;
-      let Inst{6-0}  = 0b0000000;
+      let Inst{11-9} = 0;
+      let Inst{8-7} = I;
+      let Inst{6-0}  = 0b0001011;
+    }
+
+    def set_cood_cfg_#I : RVInst<(outs), (ins GPR:$rs1, GPR:$rs2, GPR:$rs3), "set_cood_cfg."#I, "$rs1, $rs2, $rs3", [], InstFormatOther> {
+      bits<5> rs1;
+      bits<5> rs2;
+      bits<5> rs3;
+
+      let Defs = [
+        !cast<RISCVReg>("CoodGen"#I#"Dim0Base"), !cast<RISCVReg>("CoodGen"#I#"Dim0Incr"),
+        !cast<RISCVReg>("CoodGen"#I#"Dim1Base"), !cast<RISCVReg>("CoodGen"#I#"Dim1Incr"),
+        !cast<RISCVReg>("CoodGen"#I#"Dim2Base"), !cast<RISCVReg>("CoodGen"#I#"Dim2Incr"),
+      ];
+      let hasSideEffects = 1;
+      let mayLoad = 0;
+      let mayStore = 0;
+      // let isAsmParserOnly = 1;
+
+      let Inst{31-27} = rs3;
+      let Inst{26-25} = 0;
+      let Inst{24-20} = rs2;
+      let Inst{19-15} = rs1;
+      let Inst{14-12} = 0;
+      let Inst{11-9} = 0;
+      let Inst{8-7} = I;
+      let Inst{6-0}  = 0b0101011;
     }
   }
 
@@ -165,7 +203,7 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{10}    = 0;
     let Inst{9}     = en1;
     let Inst{8-7}   = 0;
-    let Inst{6-0}   = 0b0001000;
+    let Inst{6-0}   = 0b1111011;
   }
 
   def loadw_mm : RVInst<(outs), (ins GPR:$rs1, GPR:$rs2, uimm1:$widx, uimm1:$en1), "loadw.mm", "$rs1, $rs2, $widx, $en1", [], InstFormatOther> {
@@ -188,7 +226,7 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{10}    = 0;
     let Inst{9}     = en1;
     let Inst{8-7}   = 0;
-    let Inst{6-0}   = 0b0001000;
+    let Inst{6-0}   = 0b1111011;
   }
 
   def loadz_mm : RVInst<(outs), (ins GPR:$rs1, uimm1:$widx, uimm1:$en1), "loadz.mm", "$rs1, $widx, $en1", [], InstFormatOther> {
@@ -210,7 +248,7 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{10}    = 0;
     let Inst{9}     = en1;
     let Inst{8-7}   = 0;
-    let Inst{6-0}   = 0b0001000;
+    let Inst{6-0}   = 0b1111011;
   }
 
   def loads_mm : RVInst<(outs), (ins GPR:$rs1, uimm1:$widx, uimm1:$en1), "loads.mm", "$rs1, $widx, $en1", [], InstFormatOther> {
@@ -232,11 +270,11 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{10}    = 0;
     let Inst{9}     = en1;
     let Inst{8-7}   = 0;
-    let Inst{6-0}   = 0b0001000;
+    let Inst{6-0}   = 0b1111011;
   }
 
 
-  def gemv_mm : RVInst<(outs), (ins GPR:$rs1, GPR:$rs3, uimm1:$widx, uimm1:$en1, uimm1:$en3), "gemv.mm", "$rs1, $rs3, $widx, $en1, $en3", [], InstFormatOther> {
+  def gemm_mm : RVInst<(outs), (ins GPR:$rs1, GPR:$rs3, uimm1:$widx, uimm1:$en1, uimm1:$en3), "gemm.mm", "$rs1, $rs3, $widx, $en1, $en3", [], InstFormatOther> {
     bits<5> rs1;
     bits<5> rs3;
     bits<1> en1;
@@ -257,12 +295,12 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{10}    = 0;
     let Inst{9}     = en1;
     let Inst{8-7}   = 0;
-    let Inst{6-0}   = 0b0001000;
+    let Inst{6-0}   = 0b1111011;
   }
 
-  def gemv_acc_mm : F_Mat<0b101, "gemv_acc.mm">;
-  def gemv_acc_s_mm : F_Mat<0b110, "gemv_acc_s.mm">;
-  def gemv_s_mm : F_Mat<0b111, "gemv_s.mm">;
+  def gemm_acc_mm : F_Mat<0b101, "gemm_acc.mm">;
+  def gemm_acc_s_mm : F_Mat<0b110, "gemm_acc_s.mm">;
+  def gemm_s_mm : F_Mat<0b111, "gemm_s.mm">;
 
   def exp_m_v_f32  : F_MUR<0b0000000, 0b000, "exp.m.v.f32">;
   def f16tof32_m_v : F_MUR<0b0000000, 0b001, "f16_to_f32.m.v">;
@@ -283,7 +321,7 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{19-15} = rs1;
     let Inst{14-12} = 0b000;
     let Inst{11-7}  = rd;
-    let Inst{6-0}   = 0b0100010;
+    let Inst{6-0}   = 0b1101011;
   }
 
   def store_shared : RVInst<(outs), (ins GPR:$rs2, GPRMem:$rs1, simm12:$imm12), "st.shared", "$rs2, ${imm12}(${rs1})", [], InstFormatOther> {
@@ -298,9 +336,9 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{31-25} = imm12{11-5};
     let Inst{24-20} = rs2;
     let Inst{19-15} = rs1;
-    let Inst{14-12} = 0b001;
+    let Inst{14-12} = 0b000;
     let Inst{11-7}  = imm12{4-0};
-    let Inst{6-0}   = 0b0100100;
+    let Inst{6-0}   = 0b1010111;
   }
 
   def vmask_set : RVInst<(outs), (ins GPRMem:$rs1), "vmask_set", "$rs1", [], InstFormatOther> {
@@ -313,9 +351,9 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{31-25} = 0;
     let Inst{24-20} = 0;
     let Inst{19-15} = rs1;
-    let Inst{14-12} = 0b001;
+    let Inst{14-12} = 0;
     let Inst{11-7}  = 0;
-    let Inst{6-0}   = 0b0100000;
+    let Inst{6-0}   = 0b1111111;
   }
 
   def dma_setup_dram  : F_DMA<0b000, "dma_setup_dram">;
@@ -323,58 +361,61 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
   def dma_load_start  : F_DMA<0b010, "dma_load_start">;
   def dma_store_start : F_DMA<0b011, "dma_store_start">;
 
-  def dma_wait : RVInst<(outs), (ins uimm2:$id), "dma_wait", "$id", [], InstFormatOther> {
-    bits<2> id;
+  // def dma_wait : RVInst<(outs), (ins uimm2:$id), "dma_wait", "$id", [], InstFormatOther> {
+  //   bits<2> id;
 
-    let hasSideEffects = 1;
-    let mayLoad = 0;
-    let mayStore = 0;
+  //   let hasSideEffects = 1;
+  //   let mayLoad = 0;
+  //   let mayStore = 0;
 
-    let Inst{31-27} = 0;
-    let Inst{26-25} = id;
-    let Inst{24-20} = 0;
-    let Inst{19-15} = 0;
-    let Inst{14-12} = 0b100;
-    let Inst{11-7}  = 0;
-    let Inst{6-0}   = 0b0010000;
-  }
+  //   let Inst{31-27} = 0;
+  //   let Inst{26-25} = id;
+  //   let Inst{24-20} = 0;
+  //   let Inst{19-15} = 0;
+  //   let Inst{14-12} = 0b100;
+  //   let Inst{11-7}  = 0;
+  //   let Inst{6-0}   = 0b0010000;
+  // }
 
-  def rpt_start : RVInst<(outs GPR:$rd), (ins GPR:$rs1), "rpt_start", "$rd, $rs1", [], InstFormatOther> {
-    bits<5> rs1;
-    bits<5> rd;
+//   def rpt_start : RVInst<(outs GPR:$rd), (ins GPR:$rs1), "rpt_start", "$rd, $rs1", [], InstFormatOther> {
+//     bits<5> rs1;
+//     bits<5> rd;
 
-    let hasSideEffects = 1;
-    let mayLoad = 0;
-    let mayStore = 0;
+//     let hasSideEffects = 1;
+//     let mayLoad = 0;
+//     let mayStore = 0;
 
-    let Inst{31-20} = 0;
-    let Inst{19-15} = rs1;
-    let Inst{14-12} = 0b000;
-    let Inst{11-7}  = rd;
-    let Inst{6-0}   = 0b0010100;
-  }
+//     let Inst{31-20} = 0;
+//     let Inst{19-15} = rs1;
+//     let Inst{14-12} = 0b000;
+//     let Inst{11-7}  = rd;
+//     let Inst{6-0}   = 0b0010100;
+//   }
 
-  def rpt_end : RVInst<(outs GPR:$rd), (ins simm12:$imm12), "rpt_end", "$rd, $imm12", [], InstFormatOther> {
-    bits<5> rd;
-    bits<12> imm12;
+//   def rpt_end : RVInst<(outs GPR:$rd), (ins simm12:$imm12), "rpt_end", "$rd, $imm12", [], InstFormatOther> {
+//     bits<5> rd;
+//     bits<12> imm12;
 
-    let hasSideEffects = 1;
-    let mayLoad = 0;
-    let mayStore = 1;
+//     let hasSideEffects = 1;
+//     let mayLoad = 0;
+//     let mayStore = 1;
 
-    // let isBranch = 1;
-    let isTerminator = 1;
+//     // let isBranch = 1;
+//     let isTerminator = 1;
 
-    let Inst{31-20} = imm12;
-    let Inst{24-20} = 0;
-    let Inst{19-15} = 0;
-    let Inst{14-12} = 0b001;
-    let Inst{11-7}  = rd;
-    let Inst{6-0}   = 0b0011000;
-  }
+//     let Inst{31-20} = imm12;
+//     let Inst{24-20} = 0;
+//     let Inst{19-15} = 0;
+//     let Inst{14-12} = 0b001;
+//     let Inst{11-7}  = rd;
+//     let Inst{6-0}   = 0b0011000;
+//   }
 
   def halt : F_CTRL<0b000, "halt">;
   def irq  : F_CTRL<0b001, "irq">;
+
+  def SET_SYNC  : F_SYNC<0b000, "set_sync">;
+  def WAIT_SYNC : F_SYNC<0b001, "wait_sync">;
 }
 
 // // instructions

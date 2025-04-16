@@ -20,10 +20,10 @@ start:
   mul.m.vs.f32 t1, t2, t3, 0, 1, 1 
   div.m.vs.f32 t1, t2, t3, 1, 1, 1 
 
-  set_loadw.mm t1, t2, 1
-  loadw.mm t1, t2, 1, 1
-  loadz.mm t1, 1, 1
-  loads.mm t1, 1, 1
+  set_loadw.mm t1, t2
+  loadw.mm t1, t2, 1
+  loadz.mm t1, 0
+  loads.mm t1, 1
   gemm.mm t1, t2, 1, 1, 1 
   gemm_acc.mm   t1, t2, t3, 1, 1, 1, 1
   gemm_acc_s.mm t1, t2, t3, 1, 1, 1, 1

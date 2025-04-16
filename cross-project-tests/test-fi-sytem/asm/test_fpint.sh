@@ -1,0 +1,1 @@
+/root/tools/llvm/bin/clang --target=riscv32 -march=rv32gxfpint -mabi=ilp32d -fno-builtin-printf --sysroot="/opt/riscv/riscv32-unknown-elf" --gcc-toolchain="/opt/riscv" -c test_fpint.s

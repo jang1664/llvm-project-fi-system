@@ -27,7 +27,7 @@ start:
   gemm.mm t1, t2, 1, 1, 1 
   gemm_acc.mm   t1, t2, t3, 1, 1, 1, 1
   gemm_acc_s.mm t1, t2, t3, 1, 1, 1, 1
-  gemm_s.mm     t1, t2, t3, 1, 1, 1, 1
+  gemm_s.mm     t1, t2, 1, 1, 1
 
   exp.m.v.f32    t1, t2, 1, 1
   f16_to_f32.m.v t1, t2, 1, 1

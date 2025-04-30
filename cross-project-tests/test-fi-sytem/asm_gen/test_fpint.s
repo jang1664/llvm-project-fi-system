@@ -23,54 +23,58 @@ Disassembly of section .strtab:
       40: 766c6c2e     	<unknown>
       44: 64615f6d     	<unknown>
       48: 69737264     	<unknown>
-      4c: 6e650067     	jalr	zero, 0x6e6(a0)
-      50: 64240064     	<unknown>
-      54: 73657400     	<unknown>
-      58: 00632e74     	<unknown>
-      5c: 7274732e     	<unknown>
-      60: 00626174     	<unknown>
-      64: 6d79732e     	<unknown>
-      68: 00626174     	<unknown>
+      4c: 64240067     	jalr	zero, 0x642(s0)
+      50: 73657400     	<unknown>
+      54: 00632e74     	<unknown>
+      58: 7274732e     	<unknown>
+      5c: 00626174     	<unknown>
+      60: 6d79732e     	<unknown>
+      64: 00626174     	<unknown>
 
 Disassembly of section .text:
 
 00000000 <test>:
-       0: 00038314     	rpt_start	t1, t2
-       4: e0730000     	set_addr_cfg.0	t1, t2, t3
-       8: e0730400     	set_addr_cfg.8	t1, t2, t3
-       c: e0730f80     	set_addr_cfg.31	t1, t2, t3
-      10: e0730004     	mul.m.vv.f32	t1, t2, t3, 0x0, 0x0, 0x0
-      14: e0731804     	add.m.vv.f16	t1, t2, t3, 0x0, 0x0, 0x1
-      18: e0732404     	add.m.vv.f32	t1, t2, t3, 0x0, 0x1, 0x0
-      1c: e0733c04     	mul.m.vs.f32	t1, t2, t3, 0x0, 0x1, 0x1
-      20: e0734e04     	div.m.vs.f32	t1, t2, t3, 0x1, 0x1, 0x1
-      24: 00730208     	set_loadw.mm	t1, t2, 0x1
-      28: 02731208     	loadw.mm	t1, t2, 0x1, 0x1
-      2c: 02032208     	loadz.mm	t1, 0x1, 0x1
-      30: 02033208     	loads.mm	t1, 0x1, 0x1
-      34: 3a034a08     	gemv.mm	t1, t2, 0x1, 0x1, 0x1
-      38: e2735e08     	gemv_acc.mm	t1, t2, t3, 0x1, 0x1, 0x1, 0x1
-      3c: e2736e08     	gemv_acc_s.mm	t1, t2, t3, 0x1, 0x1, 0x1, 0x1
-      40: e2737e08     	gemv_s.mm	t1, t2, t3, 0x1, 0x1, 0x1, 0x1
-      44: 0073060c     	exp.m.v.f32	t1, t2, 0x1, 0x1
-      48: 0073160c     	f16_to_f32.m.v	t1, t2, 0x1, 0x1
-      4c: 0073260c     	f32_to_f16.m.v	t1, t2, 0x1, 0x1
-      50: 0073360c     	rsum.m.v.f32	t1, t2, 0x1, 0x1
-      54: 0073460c     	relu.m.v.f32	t1, t2, 0x1, 0x1
-      58: 00238322     	ld.shared	t1, 0x2(t2)
-      5c: 00639124     	st.shared	t1, 0x2(t2)
-      60: 00031020     	vmask_set	t1
-      64: e0730014     	dma_setup_dram	t1, t2, t3, 0x0
-      68: e2731014     	dma_setup_sram	t1, t2, t3, 0x1
-      6c: e4732014     	dma_load_start	t1, t2, t3, 0x2
-      70: e6733014     	dma_store_start	t1, t2, t3, 0x3
-      74: 04004010     	dma_wait	0x2
-
-00000078 <end>:
-      78: 06001318     	rpt_end	t1, 0x60
-      7c: 0000001c     	halt
-      80: 0000101c     	irq
-      84: 00008067     	jalr	zero, 0x0(ra)
+       0: e073000b     	set_addr_cfg.0	t1, t2, t3
+       4: e073008b     	set_addr_cfg.1	t1, t2, t3
+       8: e073010b     	set_addr_cfg.2	t1, t2, t3
+       c: e073002b     	set_cood_cfg.0	t1, t2, t3
+      10: e07300ab     	set_cood_cfg.1	t1, t2, t3
+      14: e073012b     	set_cood_cfg.2	t1, t2, t3
+      18: e073005b     	mul.m.vv.f32	t1, t2, t3, 0x0, 0x0, 0x0
+      1c: e073185b     	add.m.vv.f16	t1, t2, t3, 0x0, 0x0, 0x1
+      20: e073245b     	add.m.vv.f32	t1, t2, t3, 0x0, 0x1, 0x0
+      24: e0733c5b     	mul.m.vs.f32	t1, t2, t3, 0x0, 0x1, 0x1
+      28: e0734e5b     	div.m.vs.f32	t1, t2, t3, 0x1, 0x1, 0x1
+      2c: 0073007b     	set_loadw.mm	t1, t2
+      30: 0273107b     	loadw.mm	t1, t2, 0x1
+      34: 0003207b     	loadz.mm	t1, 0x0
+      38: 0203307b     	loads.mm	t1, 0x1
+      3c: 3a034a7b     	gemm.mm	t1, t2, 0x1, 0x1, 0x1
+      40: e2735e7b     	gemm_acc.mm	t1, t2, t3, 0x1, 0x1, 0x1, 0x1
+      44: e2736e7b     	gemm_acc_s.mm	t1, t2, t3, 0x1, 0x1, 0x1, 0x1
+      48: e2737e7b     	gemm_s.mm	t1, t2, t3, 0x1, 0x1, 0x1, 0x1
+      4c: 0073061f     	exp.m.v.f32	t1, t2, 0x1, 0x1
+      50: 0073161f     	f16_to_f32.m.v	t1, t2, 0x1, 0x1
+      54: 0073261f     	f32_to_f16.m.v	t1, t2, 0x1, 0x1
+      58: 0073361f     	rsum.m.v.f32	t1, t2, 0x1, 0x1
+      5c: 0073461f     	relu.m.v.f32	t1, t2, 0x1, 0x1
+      60: 0073561f     	mv.m.v.f32	t1, t2, 0x1, 0x1
+      64: 0073661f     	neg.m.v.f32	t1, t2, 0x1, 0x1
+      68: 0073761f     	zero.m.v.f32	t1, t2, 0x1, 0x1
+      6c: 0023836b     	ld.shared	t1, 0x2(t2)
+      70: 00638157     	st.shared	t1, 0x2(t2)
+      74: 0003007f     	vmask_set	t1
+      78: e073003f     	dma_setup_dram	t1, t2, t3
+      7c: e073103f     	dma_setup_sram	t1, t2, t3
+      80: e073203f     	dma_load_start	t1, t2, t3
+      84: e073303f     	dma_store_start	t1, t2, t3
+      88: 0000005f     	halt
+      8c: 0000105f     	irq
+      90: 00008067     	jalr	zero, 0x0(ra)
+      94: 00000177     	set_sync	0x2
+      98: 000011f7     	wait_sync	0x3
+      9c: 00032077     	set_sync.reg	t1
+      a0: 00033077     	wait_sync.reg	t1
 
 Disassembly of section .comment:
 
@@ -143,26 +147,22 @@ Disassembly of section .symtab:
 
 00000000 <.symtab>:
 		...
-      10: 00000055     	<unknown>
+      10: 00000051     	<unknown>
 		...
       1c: fff10004     	<unknown>
       20: 0000000f     	fence	0, 0
 		...
-      2c: 00020000     	set_addr_cfg.0	tp, zero, zero
+      2c: 00020000     	<unknown>
       30: 00000001     	<unknown>
 		...
-      3c: 00020000     	set_addr_cfg.0	tp, zero, zero
+      3c: 00020000     	<unknown>
       40: 0000004e     	<unknown>
-      44: 00000078     	<unknown>
-      48: 00000000     	set_addr_cfg.0	zero, zero, zero
-      4c: 00020000     	set_addr_cfg.0	tp, zero, zero
-      50: 00000052     	<unknown>
 		...
-      5c: 00030000     	set_addr_cfg.0	t1, zero, zero
-      60: 00000052     	<unknown>
+      4c: 00030000     	<unknown>
+      50: 0000004e     	<unknown>
 		...
-      6c: 00050000     	set_addr_cfg.0	a0, zero, zero
-      70: 0000000a     	<unknown>
-      74: 00000000     	set_addr_cfg.0	zero, zero, zero
-      78: 00000088     	<unknown>
-      7c: 00020012     	<unknown>
+      5c: 00050000     	<unknown>
+      60: 0000000a     	<unknown>
+      64: 00000000     	<unknown>
+      68: 000000a4     	<unknown>
+      6c: 00020012     	<unknown>

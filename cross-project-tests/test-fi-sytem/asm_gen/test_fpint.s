@@ -52,7 +52,7 @@ Disassembly of section .text:
       3c: 3a034a7b     	gemm.mm	t1, t2, 0x1, 0x1, 0x1
       40: e2735e7b     	gemm_acc.mm	t1, t2, t3, 0x1, 0x1, 0x1, 0x1
       44: e2736e7b     	gemm_acc_s.mm	t1, t2, t3, 0x1, 0x1, 0x1, 0x1
-      48: e2737e7b     	gemm_s.mm	t1, t2, t3, 0x1, 0x1, 0x1, 0x1
+      48: 3a037a7b     	gemm_s.mm	t1, t2, 0x1, 0x1, 0x1
       4c: 0073061f     	exp.m.v.f32	t1, t2, 0x1, 0x1
       50: 0073161f     	f16_to_f32.m.v	t1, t2, 0x1, 0x1
       54: 0073261f     	f32_to_f16.m.v	t1, t2, 0x1, 0x1

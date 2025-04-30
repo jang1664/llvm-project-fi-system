@@ -294,9 +294,32 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{6-0}   = 0b1111011;
   }
 
+  def gemm_s_mm : RVInst<(outs), (ins GPR:$rs1, GPR:$rs3, uimm1:$widx, uimm1:$en1, uimm1:$en3), "gemm_s.mm", "$rs1, $rs3, $widx, $en1, $en3", [], InstFormatOther> {
+    bits<5> rs1;
+    bits<5> rs3;
+    bits<1> en1;
+    bits<1> en3;
+    bits<1> widx;
+
+    let hasSideEffects = 1;
+    let mayLoad = 1;
+    let mayStore = 1;
+
+    let Inst{31-27} = rs3;
+    let Inst{26}    = 0;
+    let Inst{25}    = widx;
+    let Inst{24-20} = 0;
+    let Inst{19-15} = rs1;
+    let Inst{14-12} = 0b111;
+    let Inst{11}    = en3;
+    let Inst{10}    = 0;
+    let Inst{9}     = en1;
+    let Inst{8-7}   = 0;
+    let Inst{6-0}   = 0b1111011;
+  }
+
   def gemm_acc_mm : F_Mat<0b101, "gemm_acc.mm">;
   def gemm_acc_s_mm : F_Mat<0b110, "gemm_acc_s.mm">;
-  def gemm_s_mm : F_Mat<0b111, "gemm_s.mm">;
 
   def exp_m_v_f32  : F_MUR<0b0000000, 0b000, "exp.m.v.f32">;
   def f16tof32_m_v : F_MUR<0b0000000, 0b001, "f16_to_f32.m.v">;

@@ -21,13 +21,14 @@ start:
   div.m.vs.f32 t1, t2, t3, 1, 1, 1 
 
   set_loadw.mm t1, t2
-  loadw.mm t1, t2, 1
-  loadz.mm t1, 0
-  loads.mm t1, 1
-  gemm.mm t1, t2, 1, 1, 1 
-  gemm_acc.mm   t1, t2, t3, 1, 1, 1, 1
-  gemm_acc_s.mm t1, t2, t3, 1, 1, 1, 1
-  gemm_s.mm     t1, t2, 1, 1, 1
+  loadw.mm t1, t2, t3
+  loadz.mm t1, t2
+  loads.mm t1, t2
+  set_op_idx.mm t1
+  gemm.mm t1, t2, 1, 1 
+  gemm_acc.mm   t1, t2, t3, 1, 1, 1
+  gemm_acc_s.mm t1, t2, t3, 1, 1, 1
+  gemm_s.mm     t1, t2, 1, 1
 
   exp.m.v.f32    t1, t2, 1, 1
   f16_to_f32.m.v t1, t2, 1, 1

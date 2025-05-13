@@ -18,7 +18,7 @@ start:
   add.m.vv.f16 t1, t2, t3, 0, 0, 1 
   add.m.vv.f32 t1, t2, t3, 0, 1, 0 
   mul.m.vs.f32 t1, t2, t3, 0, 1, 1 
-  div.m.vs.f32 t1, t2, t3, 1, 1, 1 
+  max.m.vs.f32 t1, t2, t3, 1, 1, 1 
 
   set_loadw.mm t1, t2
   loadw.mm t1, t2, t3
@@ -34,7 +34,7 @@ start:
   f16_to_f32.m.v t1, t2, 1, 1
   f32_to_f16.m.v t1, t2, 1, 1
   rsum.m.v.f32   t1, t2, 1, 1
-  relu.m.v.f32   t1, t2, 1, 1
+  max.m.v.f32   t1, t2, 1, 1
   mv.m.v.f32     t1, t2, 1, 1
   neg.m.v.f32    t1, t2, 1, 1
   zero.m.v.f32   t1, t2, 1, 1

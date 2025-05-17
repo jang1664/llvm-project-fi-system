@@ -19,6 +19,7 @@ start:
   add.m.vv.f32 t1, t2, t3, 0, 1, 0 
   mul.m.vs.f32 t1, t2, t3, 0, 1, 1 
   max.m.vs.f32 t1, t2, t3, 1, 1, 1 
+  sub.m.vs.f32 t1, t2, t3, 1, 1, 1
 
   set_loadw.mm t1, t2
   loadw.mm t1, t2, t3

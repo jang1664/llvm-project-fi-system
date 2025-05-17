@@ -6,7 +6,7 @@ def fpint_tuimm12 : TImmLeaf<XLenVT, [{return isUInt<12>(Imm);}]>;
 
 // formats
 let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
-  class F_MR<bits<3> funct3, string opcodestr> : RVInst<(outs), (ins GPR:$rs1, GPR:$rs2, GPR:$rs3, uimm1:$en1, uimm1:$en2, uimm1:$en3), opcodestr, "$rs1, $rs2, $rs3, $en1, $en2, $en3", [], InstFormatOther> {
+  class F_MR<bits<2>funct2, bits<3> funct3, string opcodestr> : RVInst<(outs), (ins GPR:$rs1, GPR:$rs2, GPR:$rs3, uimm1:$en1, uimm1:$en2, uimm1:$en3), opcodestr, "$rs1, $rs2, $rs3, $en1, $en2, $en3", [], InstFormatOther> {
     bits<5> rs1;
     bits<5> rs2;
     bits<5> rs3;
@@ -19,7 +19,7 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let mayStore = 1;
 
     let Inst{31-27} = rs3;
-    let Inst{26-25} = 0;
+    let Inst{26-25} = funct2;
     let Inst{24-20} = rs2;
     let Inst{19-15} = rs1;
     let Inst{14-12} = funct3;
@@ -188,12 +188,15 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     }
   }
 
-  def mul_m_vv_f32 : F_MR<0b000, "mul.m.vv.f32">;
-  def add_m_vv_f16 : F_MR<0b001, "add.m.vv.f16">;
-  def add_m_vv_f32 : F_MR<0b010, "add.m.vv.f32">;
-  def mul_m_vs_f32 : F_MR<0b011, "mul.m.vs.f32">;
-  def max_m_vs_f32 : F_MR<0b100, "max.m.vs.f32">;
-  def sub_m_vs_f32 : F_MR<0b101, "sub.m.vs.f32">;
+  def add_m_vv_f16 : F_MR<0b10, 0b000, "add.m.vv.f16">;
+  def add_m_vv_f32 : F_MR<0b00, 0b000, "add.m.vv.f32">;
+  def sub_m_vs_f32 : F_MR<0b01, 0b001, "sub.m.vs.f32">;
+  def mul_m_vv_f32 : F_MR<0b00, 0b010, "mul.m.vv.f32">;
+  def mul_m_vs_f32 : F_MR<0b01, 0b010, "mul.m.vs.f32">;
+  def div_m_vv_f32 : F_MR<0b00, 0b011, "div.m.vv.f32">;
+  def div_m_vs_f32 : F_MR<0b01, 0b011, "div.m.vs.f32">;
+  def max_m_vs_f32 : F_MR<0b01, 0b100, "max.m.vs.f32">;
+  def rsum_m_vs_f32 : F_MR<0b01, 0b101, "rsum.m.vs.f32">;
 
   def set_loadw_mm : RVInst<(outs), (ins GPR:$rs1, GPR:$rs2), "set_loadw.mm", "$rs1, $rs2", [], InstFormatOther> {
     bits<5> rs1;

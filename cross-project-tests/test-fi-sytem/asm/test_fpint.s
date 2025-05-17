@@ -14,12 +14,15 @@ start:
   set_cood_cfg.1 t1, t2, t3
   set_cood_cfg.2 t1, t2, t3
 
-  mul.m.vv.f32 t1, t2, t3, 0, 0, 0 
   add.m.vv.f16 t1, t2, t3, 0, 0, 1 
-  add.m.vv.f32 t1, t2, t3, 0, 1, 0 
-  mul.m.vs.f32 t1, t2, t3, 0, 1, 1 
+  add.m.vv.f32 t1, t2, t3, 0, 1, 0
+  sub.m.vs.f32 t1, t2, t3, 0, 1, 1 
+  mul.m.vv.f32 t1, t2, t3, 0, 0, 0 
+  mul.m.vs.f32 t1, t2, t3, 1, 0, 0 
+  div.m.vv.f32 t1, t2, t3, 1, 0, 1
+  div.m.vs.f32 t1, t2, t3, 1, 1, 0
   max.m.vs.f32 t1, t2, t3, 1, 1, 1 
-  sub.m.vs.f32 t1, t2, t3, 1, 1, 1
+  rsum.m.vs.f32 t1, t2, t3, 1, 1, 1
 
   set_loadw.mm t1, t2
   loadw.mm t1, t2, t3

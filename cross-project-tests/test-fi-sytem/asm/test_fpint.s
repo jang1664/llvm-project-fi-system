@@ -17,6 +17,7 @@ start:
   add.m.vv.f16 t1, t2, t3, 0, 0, 1 
   add.m.vv.f32 t1, t2, t3, 0, 1, 0
   sub.m.vs.f32 t1, t2, t3, 0, 1, 1 
+  mul.m.vv.f32 t1, t2, t3, 0, 0, 0
   mul.m.vv.f32 t1, t2, t3, 0, 0, 0 
   mul.m.vs.f32 t1, t2, t3, 1, 0, 0 
   div.m.vv.f32 t1, t2, t3, 1, 0, 1

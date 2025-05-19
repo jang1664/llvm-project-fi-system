@@ -24,6 +24,7 @@ start:
   div.m.vs.f32 t1, t2, t3, 1, 1, 0
   max.m.vs.f32 t1, t2, t3, 1, 1, 1 
   rsum.m.vs.f32 t1, t2, t3, 1, 1, 1
+  min.m.vs.f32 t1, t2, t3, 1, 1, 1
 
   set_loadw.mm t1, t2
   loadw.mm t1, t2, t3

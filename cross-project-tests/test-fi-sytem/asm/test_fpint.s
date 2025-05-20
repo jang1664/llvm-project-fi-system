@@ -45,7 +45,9 @@ start:
   f32_to_f16.m.v t1, t2, 1, 1
   rsum.m.v.f32   t1, t2, 1, 1
   max.m.v.f32   t1, t2, 1, 1
+  mv.m.v.f16     t1, t2, 1, 1
   mv.m.v.f32     t1, t2, 1, 1
+  neg.m.v.f16    t1, t2, 1, 1
   neg.m.v.f32    t1, t2, 1, 1
   zero.m.v.f32   t1, t2, 1, 1
   f32_to_i8.m.v  t1, t2, 1, 1

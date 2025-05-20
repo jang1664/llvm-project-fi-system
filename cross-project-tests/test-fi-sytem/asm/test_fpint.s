@@ -16,14 +16,18 @@ start:
 
   add.m.vv.f16 t1, t2, t3, 0, 0, 1 
   add.m.vv.f32 t1, t2, t3, 0, 1, 0
+  add.m.vv.i8  t1, t2, t3, 0, 1, 0
+  sub.m.vv.f32 t1, t2, t3, 0, 1, 1 
   sub.m.vs.f32 t1, t2, t3, 0, 1, 1 
   mul.m.vv.f32 t1, t2, t3, 0, 0, 0
   mul.m.vv.f32 t1, t2, t3, 0, 0, 0 
   mul.m.vs.f32 t1, t2, t3, 1, 0, 0 
   div.m.vv.f32 t1, t2, t3, 1, 0, 1
   div.m.vs.f32 t1, t2, t3, 1, 1, 0
+  max.m.vv.i8 t1, t2, t3, 1, 1, 1 
   max.m.vs.f32 t1, t2, t3, 1, 1, 1 
   rsum.m.vs.f32 t1, t2, t3, 1, 1, 1
+  min.m.vv.i8 t1, t2, t3, 1, 1, 1
   min.m.vs.f32 t1, t2, t3, 1, 1, 1
 
   set_loadw.mm t1, t2
@@ -44,6 +48,7 @@ start:
   mv.m.v.f32     t1, t2, 1, 1
   neg.m.v.f32    t1, t2, 1, 1
   zero.m.v.f32   t1, t2, 1, 1
+  f32_to_i8.m.v  t1, t2, 1, 1
 
   ld.shared t1, 2(t2)
   st.shared t1, 2(t2)

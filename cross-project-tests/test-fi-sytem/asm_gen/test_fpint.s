@@ -40,42 +40,53 @@ Disassembly of section .text:
        c: e073002b     	set_cood_cfg.0	t1, t2, t3
       10: e07300ab     	set_cood_cfg.1	t1, t2, t3
       14: e073012b     	set_cood_cfg.2	t1, t2, t3
-      18: e073005b     	mul.m.vv.f32	t1, t2, t3, 0x0, 0x0, 0x0
-      1c: e073185b     	add.m.vv.f16	t1, t2, t3, 0x0, 0x0, 0x1
-      20: e073245b     	add.m.vv.f32	t1, t2, t3, 0x0, 0x1, 0x0
-      24: e0733c5b     	mul.m.vs.f32	t1, t2, t3, 0x0, 0x1, 0x1
-      28: e0734e5b     	div.m.vs.f32	t1, t2, t3, 0x1, 0x1, 0x1
-      2c: 0073007b     	set_loadw.mm	t1, t2
-      30: e073107b     	loadw.mm	t1, t2, t3
-      34: 3803207b     	loadz.mm	t1, t2
-      38: 3803307b     	loads.mm	t1, t2
-      3c: 3200407b     	set_op_idx.mm	t1
-      40: 38034a7b     	gemm.mm	t1, t2, 0x1, 0x1
-      44: e0735e7b     	gemm_acc.mm	t1, t2, t3, 0x1, 0x1, 0x1
-      48: e0736e7b     	gemm_acc_s.mm	t1, t2, t3, 0x1, 0x1, 0x1
-      4c: 38037a7b     	gemm_s.mm	t1, t2, 0x1, 0x1
-      50: 0073061f     	exp.m.v.f32	t1, t2, 0x1, 0x1
-      54: 0073161f     	f16_to_f32.m.v	t1, t2, 0x1, 0x1
-      58: 0073261f     	f32_to_f16.m.v	t1, t2, 0x1, 0x1
-      5c: 0073361f     	rsum.m.v.f32	t1, t2, 0x1, 0x1
-      60: 0073461f     	relu.m.v.f32	t1, t2, 0x1, 0x1
-      64: 0073561f     	mv.m.v.f32	t1, t2, 0x1, 0x1
-      68: 0073661f     	neg.m.v.f32	t1, t2, 0x1, 0x1
-      6c: 0073761f     	zero.m.v.f32	t1, t2, 0x1, 0x1
-      70: 0023836b     	ld.shared	t1, 0x2(t2)
-      74: 00638157     	st.shared	t1, 0x2(t2)
-      78: 0003007f     	vmask_set	t1
-      7c: e073003f     	dma_setup_dram	t1, t2, t3
-      80: e073103f     	dma_setup_sram	t1, t2, t3
-      84: e073203f     	dma_load_start	t1, t2, t3
-      88: e073303f     	dma_store_start	t1, t2, t3
-      8c: 0000005f     	halt
-      90: 0000105f     	irq
-      94: 00008067     	jalr	zero, 0x0(ra)
-      98: 00000177     	set_sync	0x2
-      9c: 000011f7     	wait_sync	0x3
-      a0: 00032077     	set_sync.reg	t1
-      a4: 00033077     	wait_sync.reg	t1
+      18: e473085b     	add.m.vv.f16	t1, t2, t3, 0x0, 0x0, 0x1
+      1c: e073045b     	add.m.vv.f32	t1, t2, t3, 0x0, 0x1, 0x0
+      20: e073055b     	add.m.vv.i8	t1, t2, t3, 0x0, 0x1, 0x0
+      24: e0731c5b     	sub.m.vv.f32	t1, t2, t3, 0x0, 0x1, 0x1
+      28: e2731c5b     	sub.m.vs.f32	t1, t2, t3, 0x0, 0x1, 0x1
+      2c: e073205b     	mul.m.vv.f32	t1, t2, t3, 0x0, 0x0, 0x0
+      30: e073205b     	mul.m.vv.f32	t1, t2, t3, 0x0, 0x0, 0x0
+      34: e273225b     	mul.m.vs.f32	t1, t2, t3, 0x1, 0x0, 0x0
+      38: e0733a5b     	div.m.vv.f32	t1, t2, t3, 0x1, 0x0, 0x1
+      3c: e273365b     	div.m.vs.f32	t1, t2, t3, 0x1, 0x1, 0x0
+      40: e0734f5b     	max.m.vv.i8	t1, t2, t3, 0x1, 0x1, 0x1
+      44: e2734e5b     	max.m.vs.f32	t1, t2, t3, 0x1, 0x1, 0x1
+      48: e2735e5b     	rsum.m.vs.f32	t1, t2, t3, 0x1, 0x1, 0x1
+      4c: e0736f5b     	min.m.vv.i8	t1, t2, t3, 0x1, 0x1, 0x1
+      50: e2736e5b     	min.m.vs.f32	t1, t2, t3, 0x1, 0x1, 0x1
+      54: 0073007b     	set_loadw.mm	t1, t2
+      58: e073107b     	loadw.mm	t1, t2, t3
+      5c: 3803207b     	loadz.mm	t1, t2
+      60: 3803307b     	loads.mm	t1, t2
+      64: 3200407b     	set_op_idx.mm	t1
+      68: 38034a7b     	gemm.mm	t1, t2, 0x1, 0x1
+      6c: e0735e7b     	gemm_acc.mm	t1, t2, t3, 0x1, 0x1, 0x1
+      70: e0736e7b     	gemm_acc_s.mm	t1, t2, t3, 0x1, 0x1, 0x1
+      74: 38037a7b     	gemm_s.mm	t1, t2, 0x1, 0x1
+      78: 0073061f     	exp.m.v.f32	t1, t2, 0x1, 0x1
+      7c: 0073161f     	f16_to_f32.m.v	t1, t2, 0x1, 0x1
+      80: 0073261f     	f32_to_f16.m.v	t1, t2, 0x1, 0x1
+      84: 0073361f     	rsum.m.v.f32	t1, t2, 0x1, 0x1
+      88: 0073461f     	max.m.v.f32	t1, t2, 0x1, 0x1
+      8c: 0073561f     	mv.m.v.f32	t1, t2, 0x1, 0x1
+      90: 0073661f     	neg.m.v.f32	t1, t2, 0x1, 0x1
+      94: 0073761f     	zero.m.v.f32	t1, t2, 0x1, 0x1
+      98: 0273061f     	f32_to_i8.m.v	t1, t2, 0x1, 0x1
+      9c: 0023836b     	ld.shared	t1, 0x2(t2)
+      a0: 00638157     	st.shared	t1, 0x2(t2)
+      a4: 0003007f     	vmask_set	t1
+      a8: e073003f     	dma_setup_dram	t1, t2, t3
+      ac: e073103f     	dma_setup_sram	t1, t2, t3
+      b0: e073203f     	dma_load_start	t1, t2, t3
+      b4: e073303f     	dma_store_start	t1, t2, t3
+      b8: 0000005f     	halt
+      bc: 0000105f     	irq
+      c0: 00008067     	jalr	zero, 0x0(ra)
+      c4: 00000177     	set_sync	0x2
+      c8: 000011f7     	wait_sync	0x3
+      cc: 00032077     	set_sync.reg	t1
+      d0: 00033077     	wait_sync.reg	t1
 
 Disassembly of section .comment:
 
@@ -165,5 +176,5 @@ Disassembly of section .symtab:
       5c: 00050000     	<unknown>
       60: 0000000a     	<unknown>
       64: 00000000     	<unknown>
-      68: 000000a8     	<unknown>
+      68: 000000d4     	<unknown>
       6c: 00020012     	<unknown>

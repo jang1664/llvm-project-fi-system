@@ -351,6 +351,8 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
   def neg_m_v_f32   : F_MUR<0b0000000, 0b110, "neg.m.v.f32">;
   def zero_m_v_f32  : F_MUR<0b0000000, 0b111, "zero.m.v.f32">;
   def f32toi8_m_v   : F_MUR<0b0000001, 0b000, "f32_to_i8.m.v">;
+  def f32toi4_m_v   : F_MUR<0b0000010, 0b000, "f32_to_i4.m.v">;
+  def i8toi4_m_v    : F_MUR<0b0000011, 0b000, "i8_to_i4.m.v">;
 
   def load_shared : RVInst<(outs GPR:$rd), (ins GPRMem:$rs1, simm12:$imm12), "ld.shared", "$rd, ${imm12}(${rs1})", [], InstFormatOther> {
     bits<5> rd;

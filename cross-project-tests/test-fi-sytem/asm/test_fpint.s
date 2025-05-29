@@ -31,7 +31,7 @@ start:
   min.m.vv.i8 t1, t2, t3, 1, 1, 1
   min.m.vs.f32 t1, t2, t3, 1, 1, 1
 
-  set_loadw.mm t1, t2
+  set_loadw.mm t1, t2, t3
   loadw.mm t1, t2, t3
   loadz.mm t1, t2
   loads.mm t1, t2

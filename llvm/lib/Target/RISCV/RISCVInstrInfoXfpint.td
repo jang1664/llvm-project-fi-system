@@ -205,16 +205,16 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
   def min_m_vv_i8   : F_MR<0b10, 0b00, 0b110, "min.m.vv.i8">;
   def min_m_vs_f32  : F_MR<0b00, 0b01, 0b110, "min.m.vs.f32">;
 
-  def set_loadw_mm : RVInst<(outs), (ins GPR:$rs1, GPR:$rs2), "set_loadw.mm", "$rs1, $rs2", [], InstFormatOther> {
+  def set_loadw_mm : RVInst<(outs), (ins GPR:$rs1, GPR:$rs2,  GPR:$rs3), "set_loadw.mm", "$rs1, $rs2, $rs3", [], InstFormatOther> {
     bits<5> rs1;
     bits<5> rs2;
-    bits<1> en1;
+    bits<5> rs3;
 
     let hasSideEffects = 1;
     let mayLoad = 0;
     let mayStore = 0;
 
-    let Inst{31-27} = 0;
+    let Inst{31-27} = rs3;
     let Inst{26}    = 0;
     let Inst{25}    = 0;
     let Inst{24-20} = rs2;

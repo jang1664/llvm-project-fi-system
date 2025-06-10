@@ -26,6 +26,7 @@ start:
   div.m.vv.f32 t1, t2, t3, 1, 0, 1
   div.m.vs.f32 t1, t2, t3, 1, 1, 0
   max.m.vv.i8 t1, t2, t3, 1, 1, 1 
+  max.m.vv.f32 t1, t2, t3, 1, 1, 1
   max.m.vs.f32 t1, t2, t3, 1, 1, 1 
   rsum.m.vs.f32 t1, t2, t3, 1, 1, 1
   min.m.vv.i8 t1, t2, t3, 1, 1, 1

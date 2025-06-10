@@ -201,6 +201,7 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
   def div_m_vs_f32  : F_MR<0b00, 0b01, 0b011, "div.m.vs.f32">;
   def max_m_vv_i8   : F_MR<0b10, 0b00, 0b100, "max.m.vv.i8">;
   def max_m_vs_f32  : F_MR<0b00, 0b01, 0b100, "max.m.vs.f32">;
+  def max_m_vv_f32  : F_MR<0b00, 0b00, 0b100, "max.m.vv.f32">;
   def rsum_m_vs_f32 : F_MR<0b00, 0b01, 0b101, "rsum.m.vs.f32">;
   def min_m_vv_i8   : F_MR<0b10, 0b00, 0b110, "min.m.vv.i8">;
   def min_m_vs_f32  : F_MR<0b00, 0b01, 0b110, "min.m.vs.f32">;

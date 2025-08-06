@@ -73,6 +73,9 @@ start:
   set_sync.reg t1
   wait_sync.reg t1
 
+  hid t1
+  wid t2
+
 .Lfunc_end0:
 	.size	test, .Lfunc_end0-test
                                         # -- End function

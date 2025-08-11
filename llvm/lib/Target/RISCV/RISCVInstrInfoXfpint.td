@@ -431,4 +431,16 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
   def WAIT_SYNC : F_SYNC<0b001, "wait_sync">;
   def SET_SYNC_REG  : F_SYNC_REG<0b010, "set_sync.reg">;
   def WAIT_SYNC_REG : F_SYNC_REG<0b011, "wait_sync.reg">;
+
+  def CORE_SYNC : RVInst<(outs), (ins), "core_sync", "", [], InstFormatOther> {
+    let hasSideEffects = 1;
+    let mayLoad  = 0;
+    let mayStore = 0;
+
+    // All reserved bits are zero
+    let Inst{31-15} = 0;
+    let Inst{14-12} = 0b100;      // funct3 for core_sync
+    let Inst{11-7}  = 0;          // reserved=0
+    let Inst{6-0}   = 0b1110111;  // custom-3 opcode
+  }
 }

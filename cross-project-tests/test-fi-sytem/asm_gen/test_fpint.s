@@ -99,6 +99,9 @@ Disassembly of section .text:
       f8: 000011f7     	wait_sync	0x3
       fc: 00032077     	set_sync.reg	t1
      100: 00033077     	wait_sync.reg	t1
+     104: 00004077     	core_sync
+     108: 0000235f     	hid	t1
+     10c: 000033df     	wid	t2
 
 Disassembly of section .comment:
 
@@ -188,5 +191,5 @@ Disassembly of section .symtab:
       5c: 00050000     	<unknown>
       60: 0000000a     	<unknown>
       64: 00000000     	<unknown>
-      68: 00000104     	<unknown>
+      68: 00000110     	<unknown>
       6c: 00020012     	<unknown>

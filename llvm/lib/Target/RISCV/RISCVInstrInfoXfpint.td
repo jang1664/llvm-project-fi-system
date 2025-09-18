@@ -104,6 +104,19 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{6-0}   = 0b1011111;
   }
 
+  class F_CTRL2<bits<3> funct3, string opcodestr> : RVInst<(outs GPR:$rd), (ins), opcodestr, "$rd", [], InstFormatOther> {
+    bits<5> rd;
+
+    let hasSideEffects = 1;
+    let mayLoad = 0;
+    let mayStore = 0;
+
+    let Inst{31-15} = 0;
+    let Inst{14-12} = funct3;
+    let Inst{11-7}   = rd;
+    let Inst{6-0}   = 0b1011111;
+  }
+
   class F_SYNC<bits<3> funct3, string opcodestr> : RVInst<(outs), (ins uimm5:$imm), opcodestr, "$imm", [], InstFormatOther> {
     bits<5> imm;
     
@@ -464,8 +477,23 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
   def halt : F_CTRL<0b000, "halt">;
   def irq  : F_CTRL<0b001, "irq">;
 
+  def hid  : F_CTRL2<0b010, "hid">;
+  def wid  : F_CTRL2<0b011, "wid">;
+
   def SET_SYNC  : F_SYNC<0b000, "set_sync">;
   def WAIT_SYNC : F_SYNC<0b001, "wait_sync">;
   def SET_SYNC_REG  : F_SYNC_REG<0b010, "set_sync.reg">;
   def WAIT_SYNC_REG : F_SYNC_REG<0b011, "wait_sync.reg">;
+
+  def CORE_SYNC : RVInst<(outs), (ins), "core_sync", "", [], InstFormatOther> {
+    let hasSideEffects = 1;
+    let mayLoad  = 0;
+    let mayStore = 0;
+
+    // All reserved bits are zero
+    let Inst{31-15} = 0;
+    let Inst{14-12} = 0b100;      // funct3 for core_sync
+    let Inst{11-7}  = 0;          // reserved=0
+    let Inst{6-0}   = 0b1110111;  // custom-3 opcode
+  }
 }

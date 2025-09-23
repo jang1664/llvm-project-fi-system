@@ -33,24 +33,22 @@ start:
   min.m.vs.f32 t1, t2, t3, 1, 1, 1
 
   set_loadw.mm t1, t2, t3
-  loadw.mm t1, t2, t3
-  loadz.mm t1, t2
-  loads.mm t1, t2
+  loadw.mm t1, t2, t3, 3
+  loadz.mm t1, t2, 3
+  loads.mm t1, t2, 3
   set_op_idx.mm t1
-  gemm.mm.32x128 t1, t2, 1, 1 
-  gemm.mm.64x64 t1, t2, 1, 1 
-  gemm.mm.128x32 t1, t2, 1, 1 
-  gemm_acc.mm.32x128   t1, t2, t3, 1, 1, 1
-  gemm_acc.mm.64x64   t1, t2, t3, 1, 1, 1
-  gemm_acc.mm.128x32   t1, t2, t3, 1, 1, 1
 
-  gemm_acc_s.mm.32x128 t1, t2, t3, 1, 1, 1
-  gemm_acc_s.mm.64x64  t1, t2, t3, 1, 1, 1
-  gemm_acc_s.mm.128x32 t1, t2, t3, 1, 1, 1
+  gemm.mm t1, t2, 1, 1, 3
+  gemm.mm t1, t2, 1, 1, 1
 
-  gemm_s.mm.32x128 t1, t2, 1, 1
-  gemm_s.mm.64x64  t1, t2, 1, 1
-  gemm_s.mm.128x32 t1, t2, 1, 1
+  gemm_acc.mm   t1, t2, t3, 1, 1, 1,0
+  gemm_acc.mm   t1, t2, t3, 1, 1, 1,3
+
+  gemm_acc_s.mm t1, t2, t3, 1, 1, 1, 0
+  gemm_acc_s.mm  t1, t2, t3, 1, 1, 1, 3
+
+  gemm_s.mm t1, t2, 1, 1, 0
+  gemm_s.mm  t1, t2, 1, 1, 3
 
   exp.m.v.f32    t1, t2, 1, 1
   f16_to_f32.m.v t1, t2, 1, 1

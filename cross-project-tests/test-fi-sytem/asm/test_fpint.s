@@ -32,23 +32,10 @@ start:
   min.m.vv.i8 t1, t2, t3, 1, 1, 1
   min.m.vs.f32 t1, t2, t3, 1, 1, 1
 
-  set_loadw.mm t1, t2, t3
-  loadw.mm t1, t2, t3, 3
-  loadz.mm t1, t2, 3
-  loads.mm t1, t2, 3
+  set_reg_load.mm t1, t2, t3
+  load_reg.mm t1, t2, t3 
   set_op_idx.mm t1
-
-  gemm.mm t1, t2, 1, 1, 3
-  gemm.mm t1, t2, 1, 1, 1
-
-  gemm_acc.mm   t1, t2, t3, 1, 1, 1,0
-  gemm_acc.mm   t1, t2, t3, 1, 1, 1,3
-
-  gemm_acc_s.mm t1, t2, t3, 1, 1, 1, 0
-  gemm_acc_s.mm  t1, t2, t3, 1, 1, 1, 3
-
-  gemm_s.mm t1, t2, 1, 1, 0
-  gemm_s.mm  t1, t2, 1, 1, 3
+  gemm.mm t1, t2, t3, 1, 1, 1, 7, 3 
 
   exp.m.v.f32    t1, t2, 1, 1
   f16_to_f32.m.v t1, t2, 1, 1

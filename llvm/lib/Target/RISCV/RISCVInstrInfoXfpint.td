@@ -30,75 +30,30 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{6-0}   = 0b1011011;
   }
 
-  class F_gemm_mm<string opcodestr> : RVInst<(outs), (ins GPR:$rs1, GPR:$rs3, uimm1:$en1, uimm1:$en3, uimm2:$subtype), opcodestr, "$rs1, $rs3, $en1, $en3 $subtype", [], InstFormatOther> {
+  class F_gemm_mm<string opcodestr> : RVInst<(outs), (ins GPR:$rs1, GPR:$rs2, GPR:$rs3, uimm1:$en1, uimm1:$en2, uimm1:$en3, uimm3:$cfg1, uimm2:$cfg2), opcodestr, "$rs1, $rs2, $rs3, $en1, $en2, $en3, $cfg1, $cfg2", [], InstFormatOther> {
       bits<5> rs1;
+      bits<5> rs2;
       bits<5> rs3;
       bits<1> en1;
+      bits<1> en2;
       bits<1> en3;
-      bits<2> subtype;
+      bits<3> cfg1;
+      bits<2> cfg2;
 
       let hasSideEffects = 1;
       let mayLoad = 1;
       let mayStore = 1;
 
       let Inst{31-27} = rs3;
-      let Inst{26-25} = subtype;
-      let Inst{24-20} = 0;
+      let Inst{26-25} = cfg2;
+      let Inst{24-20} = rs2;
       let Inst{19-15} = rs1;
-      let Inst{14-12} = 0b100;
+      let Inst{14-12} = cfg1;
       let Inst{11}    = en3;
-      let Inst{10}    = 0;
+      let Inst{10}    = en2;
       let Inst{9}     = en1;
-      let Inst{8-7}   = 0;
+      let Inst{8-7}   = 0b11;
       let Inst{6-0}   = 0b1111011;
-  }
-
-  class F_gemm_s_mm<string opcodestr> : RVInst<(outs), (ins GPR:$rs1, GPR:$rs3, uimm1:$en1, uimm1:$en3, uimm2:$subtype), opcodestr, "$rs1, $rs3, $en1, $en3 $subtype", [], InstFormatOther> {
-      bits<5> rs1;
-      bits<5> rs3;
-      bits<1> en1;
-      bits<1> en3;
-      bits<2> subtype;
-
-      let hasSideEffects = 1;
-      let mayLoad = 1;
-      let mayStore = 1;
-
-      let Inst{31-27} = rs3;
-      let Inst{26-25} = subtype;
-      let Inst{24-20} = 0;
-      let Inst{19-15} = rs1;
-      let Inst{14-12} = 0b111;
-      let Inst{11}    = en3;
-      let Inst{10}    = 0;
-      let Inst{9}     = en1;
-      let Inst{8-7}   = 0;
-      let Inst{6-0}   = 0b1111011;
-  }
-
-  class F_Mat<bits<3> funct3, string opcodestr> : RVInst<(outs), (ins GPR:$rs1, GPR:$rs2, GPR:$rs3, uimm1:$en1, uimm1:$en2, uimm1:$en3, uimm2:$subtype), opcodestr, "$rs1, $rs2, $rs3, $en1, $en2, $en3 $subtype", [], InstFormatOther> {
-    bits<5> rs1;
-    bits<5> rs2;
-    bits<5> rs3;
-    bits<1> en1;
-    bits<1> en2;
-    bits<1> en3;
-    bits<2> subtype;
-
-    let hasSideEffects = 1;
-    let mayLoad = 1;
-    let mayStore = 1;
-
-    let Inst{31-27} = rs3;
-    let Inst{26-25} = subtype;
-    let Inst{24-20} = rs2;
-    let Inst{19-15} = rs1;
-    let Inst{14-12} = funct3;
-    let Inst{11}    = en3;
-    let Inst{10}    = en2;
-    let Inst{9}     = en1;
-    let Inst{8-7}   = 0;
-    let Inst{6-0}   = 0b1111011;
   }
 
   class F_MUR<bits<7> funct7, bits<3> funct3, string opcodestr> : RVInst<(outs), (ins GPR:$rs1, GPR:$rs2, uimm1:$en1, uimm1:$en2), opcodestr, "$rs1, $rs2, $en1, $en2", [], InstFormatOther> {
@@ -264,7 +219,7 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
   def min_m_vv_i8   : F_MR<0b10, 0b00, 0b110, "min.m.vv.i8">;
   def min_m_vs_f32  : F_MR<0b00, 0b01, 0b110, "min.m.vs.f32">;
 
-  def set_loadw_mm : RVInst<(outs), (ins GPR:$rs1, GPR:$rs2, GPR:$rs3), "set_loadw.mm", "$rs1, $rs2, $rs3", [], InstFormatOther> {
+  def set_reg_load : RVInst<(outs), (ins GPR:$rs1, GPR:$rs2, GPR:$rs3), "set_reg_load.mm", "$rs1, $rs2, $rs3", [], InstFormatOther> {
     bits<5> rs1;
     bits<5> rs2;
     bits<5> rs3;
@@ -277,62 +232,26 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let Inst{26-25} = 0;
     let Inst{24-20} = rs2;
     let Inst{19-15} = rs1;
-    let Inst{14-12} = 0b000;
+    let Inst{14-12} = 0b111; // funct3 for set_reg_load
     let Inst{11-7}  = 0;
     let Inst{6-0}   = 0b1111011;
   }
 
-  def loadw_mm : RVInst<(outs), (ins GPR:$rs1, GPR:$rs2, GPR:$widx, uimm2:$subtype), "loadw.mm", "$rs1, $rs2, $widx, $subtype", [], InstFormatOther> {
-    bits<5> rs1;
-    bits<5> rs2;
-    bits<5> widx;
-    bits<2> subtype;
+  def load_reg : RVInst<(outs), (ins GPR:$addr, GPR:$reg_idx, GPR:$segpad), "load_reg.mm", "$addr, $reg_idx, $segpad", [], InstFormatOther> {
+    bits<5> addr;
+    bits<5> reg_idx;
+    bits<5> segpad;
 
     let hasSideEffects = 1;
     let mayLoad = 1;
     let mayStore = 0;
 
-    let Inst{31-27} = widx;
-    let Inst{26-25} = subtype;
-    let Inst{24-20} = rs2;
-    let Inst{19-15} = rs1;
-    let Inst{14-12} = 0b001;
-    let Inst{11-7}  = 0;
-    let Inst{6-0}   = 0b1111011;
-  }
-
-  def loadz_mm : RVInst<(outs), (ins GPR:$rs1, GPR:$widx, uimm2:$subtype), "loadz.mm", "$rs1, $widx, $subtype", [], InstFormatOther> {
-    bits<5> rs1;
-    bits<5> widx;
-    bits<2> subtype;
-
-    let hasSideEffects = 1;
-    let mayLoad = 1;
-    let mayStore = 0;
-
-    let Inst{31-27} = widx;
-    let Inst{26-25} = subtype;
-    let Inst{24-20} = 0;
-    let Inst{19-15} = rs1;
-    let Inst{14-12} = 0b010;
-    let Inst{11-7}  = 0;
-    let Inst{6-0}   = 0b1111011;
-  }
-
-  def loads_mm : RVInst<(outs), (ins GPR:$rs1, GPR:$widx, uimm2:$subtype), "loads.mm", "$rs1, $widx, $subtype", [], InstFormatOther> {
-    bits<5> rs1;
-    bits<5> widx;
-    bits<2> subtype;
-
-    let hasSideEffects = 1;
-    let mayLoad = 1;
-    let mayStore = 0;
-
-    let Inst{31-27} = widx;
-    let Inst{26-25} = subtype;
-    let Inst{24-20} = 0;
-    let Inst{19-15} = rs1;
-    let Inst{14-12} = 0b011;
+    // encode reg_idx into bits[31:27] similar to other load instructions
+    let Inst{31-27} = segpad;
+    let Inst{26-25} = 0b01;
+    let Inst{24-20} = reg_idx;
+    let Inst{19-15} = addr;
+    let Inst{14-12} = 0b111; // funct3 for load_reg
     let Inst{11-7}  = 0;
     let Inst{6-0}   = 0b1111011;
   }
@@ -345,76 +264,15 @@ let Predicates = [HasVendorXfpint, IsRV32], DecoderNamespace = "Xfpint" in {
     let mayStore = 0;
 
     let Inst{31-27} = rs3;
-    let Inst{26-25} = 0b01;
+    let Inst{26-25} = 0b10;
     let Inst{24-20} = 0;
     let Inst{19-15} = 0;
-    let Inst{14-12} = 0b000;
+    let Inst{14-12} = 0b111;
     let Inst{11-7}  = 0;
     let Inst{6-0}   = 0b1111011;
   }
 
   def gemm_mm : F_gemm_mm<"gemm.mm">;
-  // def gemm_mm_32x128 : F_gemm_mm<0b00, "gemm.mm.32x128">;
-  // def gemm_mm_64x64  : F_gemm_mm<0b01, "gemm.mm.64x64">;
-  // def gemm_mm_128x32 : F_gemm_mm<0b10, "gemm.mm.128x32">;
-  // def gemm_mm : RVInst<(outs), (ins GPR:$rs1, GPR:$rs3, uimm1:$en1, uimm1:$en3), "gemm.mm", "$rs1, $rs3, $en1, $en3", [], InstFormatOther> {
-  //   bits<5> rs1;
-  //   bits<5> rs3;
-  //   bits<1> en1;
-  //   bits<1> en3;
-
-  //   let hasSideEffects = 1;
-  //   let mayLoad = 1;
-  //   let mayStore = 1;
-
-  //   let Inst{31-27} = rs3;
-  //   let Inst{26-25} = 0;
-  //   let Inst{24-20} = 0;
-  //   let Inst{19-15} = rs1;
-  //   let Inst{14-12} = 0b100;
-  //   let Inst{11}    = en3;
-  //   let Inst{10}    = 0;
-  //   let Inst{9}     = en1;
-  //   let Inst{8-7}   = 0;
-  //   let Inst{6-0}   = 0b1111011;
-  // }
-
-  // def gemm_s_mm : RVInst<(outs), (ins GPR:$rs1, GPR:$rs3, uimm1:$en1, uimm1:$en3), "gemm_s.mm", "$rs1, $rs3, $en1, $en3", [], InstFormatOther> {
-  //   bits<5> rs1;
-  //   bits<5> rs3;
-  //   bits<1> en1;
-  //   bits<1> en3;
-
-  //   let hasSideEffects = 1;
-  //   let mayLoad = 1;
-  //   let mayStore = 1;
-
-  //   let Inst{31-27} = rs3;
-  //   let Inst{26}    = 0;
-  //   let Inst{25}    = 0;
-  //   let Inst{24-20} = 0;
-  //   let Inst{19-15} = rs1;
-  //   let Inst{14-12} = 0b111;
-  //   let Inst{11}    = en3;
-  //   let Inst{10}    = 0;
-  //   let Inst{9}     = en1;
-  //   let Inst{8-7}   = 0;
-  //   let Inst{6-0}   = 0b1111011;
-  // }
-  def gemm_s_mm : F_gemm_s_mm<"gemm_s.mm">;
-  // def gemm_s_mm_32x128 : F_gemm_s_mm<0b00, "gemm_s.mm.32x128">;
-  // def gemm_s_mm_64x64  : F_gemm_s_mm<0b01, "gemm_s.mm.64x64">;
-  // def gemm_s_mm_128x32 : F_gemm_s_mm<0b10, "gemm_s.mm.128x32">;
-
-  def gemm_acc_mm   : F_Mat<0b101, "gemm_acc.mm">;
-  // def gemm_acc_mm_32x128   : F_Mat<0b101, 0b00, "gemm_acc.mm.32x128">;
-  // def gemm_acc_mm_64x64    : F_Mat<0b101, 0b01, "gemm_acc.mm.64x64">;
-  // def gemm_acc_mm_128x32   : F_Mat<0b101, 0b10, "gemm_acc.mm.128x32">;
-
-  def gemm_acc_s : F_Mat<0b110, "gemm_acc_s.mm">;
-  // def gemm_acc_s_mm_32x128 : F_Mat<0b110, 0b00, "gemm_acc_s.mm.32x128">;
-  // def gemm_acc_s_mm_64x64  : F_Mat<0b110, 0b01, "gemm_acc_s.mm.64x64">;
-  // def gemm_acc_s_mm_128x32 : F_Mat<0b110, 0b10, "gemm_acc_s.mm.128x32">;
 
   def exp_m_v_f32   : F_MUR<0b0000000, 0b000, "exp.m.v.f32">;
   def f16tof32_m_v  : F_MUR<0b0000000, 0b001, "f16_to_f32.m.v">;
